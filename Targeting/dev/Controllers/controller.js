@@ -25,7 +25,7 @@ exports.findTargeting = function(req, res){
       })
       return;
   }
-  con.query('SELECT id FROM advertiser_campaigns WHERE advertiser_campaigns.id IN ('+advertiser_campaigns+') AND (targeting IS NULL OR targeting LIKE "%'+zip_code+'%")', (err, result, fields) => {
+  con.query('SELECT id FROM advertiser_campaigns WHERE advertiser_campaigns.id IN ('+advertiser_campaigns+') AND (targeting = "" OR targeting LIKE "%'+zip_code+'%")', (err, result, fields) => {
       if (err) {
           console.log("Status 500. Details: " + err);
           res.status(500).json({
