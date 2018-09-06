@@ -3,20 +3,20 @@ var con = require('../Models/model.js');
 
 
 exports.findExclusions = function(req, res){
-/*   let advertiser_campaign = req.query.advertiser_campaign;
-  console.log(req.query.advertiser_campaign); */
+   let advertiser_campaign = req.query.advertiser_campaign;
+  console.log(req.query.advertiser_campaign); 
     
   let publishers_campaigns = req.query.publishers_campaigns;
   console.log(req.query.publishers_campaigns);
   
-/*   if (!advertiser_campaign) {
+   if (!advertiser_campaign) {
       console.log("No Advertiser Campaign");
       res.status(400).json({
           status: 400,
           message: "No Advertiser Campaign"
       })
       return;
-  } */
+  } 
     
   if (!publishers_campaigns ) {
       console.log("No Publisher Campaign");
