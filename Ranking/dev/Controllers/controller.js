@@ -4,6 +4,7 @@ var con = require('../Models/model.js');
 
 exports.getRanking = function(req, res){
   let advertiser_campaigns = req.query.advertiser_campaigns.split(",");
+  console.log(advertiser_campaigns);
   let advertiser_campaigns_bids = req.query.advertiser_campaigns_bids.split(",");
   let maximum = req.query.maximum;
   let rankings = [];
