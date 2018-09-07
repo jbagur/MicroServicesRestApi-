@@ -8,10 +8,11 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 
 RUN npm install
+RUN npm install nodemon -g
 
 #Bundle app source
 COPY . .
 
 # Expose port 8080
 EXPOSE 8080
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "dev" ]
