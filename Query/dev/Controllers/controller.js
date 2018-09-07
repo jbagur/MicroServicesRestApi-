@@ -2,7 +2,7 @@ var express = require('express');
 var con = require('../Models/model.js');
 
 
-exports.findQuery = function (req, res) {
+exports.findsQuery = function (req, res) {
     let category = req.query.category;
     let publisher_campaign = req.query.publisher_campaign;
     let zip_code = req.query.zip_code;
@@ -40,17 +40,7 @@ exports.findQuery = function (req, res) {
         return;
     }
 
-<<<<<<< HEAD
-    if (!category) {
-        console.log("No Category");
-        res.status(400).json({
-            status: 400,
-            message: "No Category"
-        })
-        return;
-    }
-
-    https.get('localhost:3000?category=' + category, (resp) => {
+    https.get('localhost:3002?category=' + category, (resp) => {
         let data = '';
         // A chunk of data has been recieved
         resp.on('data', (chunk) => {
@@ -58,24 +48,11 @@ exports.findQuery = function (req, res) {
         });
         // The whole response has been received
         resp.on('end', () => {
-
+            console.log("Response: " + data);
+            res.send('JSON: ' + data);
         });
     }).on("error", (err) => {
         console.log("Error: " + err.message);
-=======
-    https.get('localhost:3000?category=' + category, (resp) => {
-        let data = '';
-        // A chunk of data has been recieved
-        resp.on('data', (chunk) => {
-            data += chunk;
-        });
-        // The whole response has been received
-        resp.on('end', () => {
-            
-        });
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
->>>>>>> refs/remotes/origin/master
     }); 
 
     /*https.get('localhost:3001?advertiser_campaigns=429&publisher_campaign=73=' + category, (resp) => {
