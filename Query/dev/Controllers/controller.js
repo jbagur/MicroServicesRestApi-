@@ -37,15 +37,6 @@ exports.findsQuery = function (req, res) {
         return;
     }
 
-    if (!category) {
-        console.log("No Category");
-        res.status(400).json({
-            status: 400,
-            message: "No Category"
-        })
-        return;
-    }
-
     https.get('localhost:3000?category=' + category, (resp) => {
         let data = '';
         // A chunk of data has been recieved
@@ -54,7 +45,7 @@ exports.findsQuery = function (req, res) {
         });
         // The whole response has been received
         resp.on('end', () => {
-
+            
         });
     }).on("error", (err) => {
         console.log("Error: " + err.message);
