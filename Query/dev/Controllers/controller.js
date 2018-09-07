@@ -2,15 +2,16 @@ var express = require('express');
 var con = require('../Models/model.js');
 
 
-exports.findQuery = function (req, res) {
+exports.findsQuery = function (req, res) {
     let category = req.query.category;
     let publisher_campaign = req.query.publisher_campaign;
     let zip_code = req.query.zip_code;
     let maximum = req.query.maximum;
 
-    console.log(req.query.category);
-    console.log(req.query.publisher_campaign);
-    console.log(req.query.zip_code);
+    console.log(category);
+    console.log(publisher_campaign);
+    console.log(zip_code);
+    console.log(maximum);
 
 
     if (!category) {
@@ -21,12 +22,12 @@ exports.findQuery = function (req, res) {
         })
         return;
     }
-
+    /*
     if (!publisher_campaign) {
         console.log("No Campaign");
         res.status(400).json({
             status: 400,
-            message: "No Category"
+            message: "No campaign"
         })
         return;
     }
@@ -35,11 +36,11 @@ exports.findQuery = function (req, res) {
         console.log("No Zip code");
         res.status(400).json({
             status: 400,
-            message: "No Category"
+            message: "No zip code"
         })
         return;
     }
-
+    */
     https.get('localhost:3002?category=' + category, (resp) => {
         let data = '';
         // A chunk of data has been recieved
