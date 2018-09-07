@@ -2,7 +2,7 @@ var express = require('express');
 var con = require('../Models/model.js');
 
 
-exports.findsQuery = function (req, res) {
+exports.findQuery = function (req, res) {
     let category = req.query.category;
     let publisher_campaign = req.query.publisher_campaign;
     let zip_code = req.query.zip_code;
