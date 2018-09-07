@@ -5,11 +5,17 @@ var con = require('../Models/model.js');
 exports.findExclusions = function(req, res){
 
   let advertiser_campaigns = req.query.advertiser_campaigns;
-  console.log(req.query.advertiser_campaign); 
+  //console.log(req.query.advertiser_campaign); 
     
   let publisher_campaign = req.query.publisher_campaign;
-  console.log(req.query.publisher_campaigns);
+  //console.log(req.query.publisher_campaigns);
   
+  let exclusionList = advertiser_campaigns.split(",");
+  let exclusions = []
+  for(i=0; i<exclusionList.length; i++){
+      exclusions.push(parseInt(exclusionList[i]));
+  }
+
    if (!advertiser_campaigns) {
       console.log("No Advertiser Campaign");
       res.status(400).json({
@@ -38,9 +44,20 @@ exports.findExclusions = function(req, res){
           return;
       } 
       if (result.length > 0){
-          console.log(JSON.stringify(result, null, 4));
+          let itemJson = JSON.stringify(result);
+          let itemParsed = JSON.parse(itemJson);
+          let filteredList = []
+          
+          for(i=0; i<itemParsed.length; i++){
+              checkExclusions = exclusions.includes(itemParsed[i]["id"]);
+              if(!checkExclusions){
+                  filteredList.push(itemParsed[i]["id"]);
+              }
+          }
+           
+          console.log(JSON.stringify(filteredList, null));
           res.status(200).json({
-              results: result
+              results: filteredList
           });
       }
       else {

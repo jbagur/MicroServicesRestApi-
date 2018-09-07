@@ -1,13 +1,13 @@
 {
-  "name": "exclusions",
+  "name": "matching",
   "version": "0.0.1",
-  "description": "Microservicio de Exclusions",
+  "description": "Microservicio de Matching",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./dev/server.js"
   },
   "keywords": [
-    "Microservicio Exclusions"
+    "Microservicio"
   ],
   "author": "Jbagur",
   "license": "ISC",
