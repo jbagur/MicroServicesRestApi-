@@ -9,6 +9,9 @@ exports.findQuery = function (req, res) {
     let maximum = req.query.maximum;
 
     console.log(req.query.category);
+    console.log(req.query.publisher_campaign);
+    console.log(req.query.zip_code);
+
 
     if (!category) {
         console.log("No Category");
@@ -37,6 +40,7 @@ exports.findQuery = function (req, res) {
         return;
     }
 
+<<<<<<< HEAD
     if (!category) {
         console.log("No Category");
         res.status(400).json({
@@ -58,6 +62,20 @@ exports.findQuery = function (req, res) {
         });
     }).on("error", (err) => {
         console.log("Error: " + err.message);
+=======
+    https.get('localhost:3000?category=' + category, (resp) => {
+        let data = '';
+        // A chunk of data has been recieved
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+        // The whole response has been received
+        resp.on('end', () => {
+            
+        });
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+>>>>>>> refs/remotes/origin/master
     }); 
 
     /*https.get('localhost:3001?advertiser_campaigns=429&publisher_campaign=73=' + category, (resp) => {
