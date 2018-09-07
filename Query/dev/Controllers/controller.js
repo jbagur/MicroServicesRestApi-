@@ -9,6 +9,9 @@ exports.findsQuery = function (req, res) {
     let maximum = req.query.maximum;
 
     console.log(req.query.category);
+    console.log(req.query.publisher_campaign);
+    console.log(req.query.zip_code);
+
 
     if (!category) {
         console.log("No Category");
