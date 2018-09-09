@@ -50,10 +50,9 @@ exports.findQuery = function (req, res) {
         let data = '';
         // A chunk of data has been received
         resp.on('data', (chunk) => {
-            console.log("chunk: " + chunk);
             data += chunk;
         });
-        console.log("Data: " + data);
+        /*console.log("Data: " + data);
         var myjson = JSON.parse(data);
         
         let list = '';
@@ -64,10 +63,20 @@ exports.findQuery = function (req, res) {
                 list += ",";
             }
         }
-        console.log("Lista" + list);
+        console.log("Lista" + list);*/
         // The whole response has been received
         resp.on('end', () => {
             console.log("Response: " + data);
+            var myjson = JSON.parse(data);
+            let list = '';
+            for (i = 0; i < myjson["results"].lenght; i++) {
+                var a_c = (myjson["results"][i]["id"]).toString();
+                list.concat(a_c);
+                if (i != myjson.results.lenght - 1) {
+                    list += ",";
+                }
+            }
+            console.log("Lista" + list);
             res.send('JSON: ' + data);
         });
     }).on("error", (err) => {
