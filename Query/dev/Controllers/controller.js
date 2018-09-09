@@ -1,6 +1,6 @@
 var express = require('express');
 var con = require('../Models/model.js');
-var https = require('https');
+var http = require('http');
 
 exports.findQuery = function (req, res) {
     let category = 1;//req.query.category;
@@ -46,7 +46,7 @@ exports.findQuery = function (req, res) {
         console.log("No maximum");
     }
     
-    https.get('18.212.105.67:3001/?category=' + category, (resp) => {
+    http.get('18.212.105.67:3001/?category=' + category, (resp) => {
         let data = '';
         // A chunk of data has been received
         resp.on('data', (chunk) => {
