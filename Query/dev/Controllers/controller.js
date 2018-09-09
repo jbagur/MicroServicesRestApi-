@@ -45,7 +45,8 @@ exports.findQuery = function (req, res) {
     if (maximum == null) {
         console.log("No maximum");
     }
-    
+
+    let list = '';
     http.get('http://18.212.105.67:3001/?category=' + category, (resp) => {
         let data = '';
         // A chunk of data has been received
@@ -68,10 +69,9 @@ exports.findQuery = function (req, res) {
         resp.on('end', () => {
             console.log("Response: " + data);
             var myjson = JSON.parse(data);
-            console.log("JSON: " + (myjson.results)[0].id);
-            let list = '';           
+            //console.log("JSON: " + (myjson.results)[0].id);     
             var l = parseInt(Object.keys(myjson.results).length);
-            console.log("JSON lenght: " + l);
+            //console.log("JSON lenght: " + l);
             for (i = 0; i < l; i++) {
                 console.log("index: " + i);
                 var a_c = ((myjson.results)[i].id).toString();
@@ -81,15 +81,14 @@ exports.findQuery = function (req, res) {
                     list += ",";
                 }
             }
-            console.log("Lista: " + list);
-            res.send('JSON: ' + data);
+            //console.log("Lista: " + list);
+            //res.send('JSON: ' + data);
         });
     }).on("error", (err) => {
         console.log("Error: " + err.message);
     }); 
 
-    /*
-    http.get('http://18.212.105.67:3002/?advertiser_campaigns=429&publisher_campaign=73=' + category, (resp) => {
+    http.get('http://18.212.105.67:3002/?advertiser_campaigns=' + list + '&publisher_campaign=' + publisher_campaign, (resp) => {
         let data = '';
         // A chunk of data has been recieved
         resp.on('data', (chunk) => {
@@ -97,9 +96,10 @@ exports.findQuery = function (req, res) {
         });
         // The whole response has been received
         resp.on('end', () => {
-
+            console.log("Response: " + data);
+            res.send('JSON: ' + data);
         });
     }).on("error", (err) => {
         console.log("Error: " + err.message);
-    });*/
+    });
 }
