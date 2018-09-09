@@ -13,7 +13,7 @@ RUN npm install nodemon -g
 #Bundle app source
 COPY . .
 
-# Expose port 80
-EXPOSE 80
+# Expose port 3006
+EXPOSE 3006
 CMD ["npm", "install", "nodemon", "-g"]
 CMD [ "npm", "run", "dev" ]

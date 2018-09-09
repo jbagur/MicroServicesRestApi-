@@ -1,4 +1,4 @@
-FROM node:10
+FROM node:8
 
 # Create app directory
 
@@ -13,7 +13,9 @@ RUN npm install nodemon -g
 #Bundle app source
 COPY . .
 
-# Expose port 80
-EXPOSE 80
-CMD ["npm", "install", "nodemon", "-g"]
+# Expose port 3005
+EXPOSE 3005
+CMD [ "npm", "i" ]
+CMD [ "npm", "install", "nodemon", "-g" ]
 CMD [ "npm", "run", "dev" ]
+
