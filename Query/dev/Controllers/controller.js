@@ -48,6 +48,7 @@ exports.findQuery = function (req, res) {
 
     let list = '';
     http.get('http://18.212.105.67:3001/?category=' + category, (resp) => {
+        console.log("Matching");
         let data = '';
         // A chunk of data has been received
         resp.on('data', (chunk) => {
@@ -73,10 +74,10 @@ exports.findQuery = function (req, res) {
             var l = parseInt(Object.keys(myjson.results).length);
             //console.log("JSON lenght: " + l);
             for (i = 0; i < l; i++) {
-                console.log("index: " + i);
+                //console.log("index: " + i);
                 var a_c = ((myjson.results)[i].id).toString();
                 list += a_c;
-                console.log("Agregar: " + a_c);
+                //console.log("Agregar: " + a_c);
                 if (i != l - 1) {
                     list += ",";
                 }
@@ -89,6 +90,7 @@ exports.findQuery = function (req, res) {
     }); 
 
     http.get('http://18.212.105.67:3002/?advertiser_campaigns=' + list + '&publisher_campaign=' + publisher_campaign, (resp) => {
+        console.log("Exclusions");
         let data = '';
         // A chunk of data has been recieved
         resp.on('data', (chunk) => {
