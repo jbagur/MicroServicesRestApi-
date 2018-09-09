@@ -72,13 +72,11 @@ exports.findQuery = function (req, res) {
             let list = '';           
             var l = parseInt(Object.keys(myjson.results).length);
             console.log("JSON lenght: " + l);
-            if (l == 1) {
-                console.log("Numero");
-            }
             for (i = 0; i < l; i++) {
                 console.log("index: " + i);
                 var a_c = ((myjson.results)[i].id).toString();
                 list.concat(a_c);
+                console.log("Agregar: " + a_c);
                 if (i != l - 1) {
                     list += ",";
                 }
