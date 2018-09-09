@@ -2,13 +2,17 @@ var express = require('express');
 var con = require('../Models/model.js');
 
 
-exports.findQuery.get('/', function (req, res) {
+exports.findQuery = function (req, res) {
     let category = req.query.category;
+    console.log(req.query.category);
     let publisher_campaign = req.query.publisher_campaign;
+    console.log(req.query.category);
     let zip_code = req.query.zip_code;
+    console.log(req.query.category);
     let maximum = req.query.maximum;
+    console.log(req.query.category);
 
-    console.log("Category: "+category+" Publisher_campaign: " +publisher_campaign+" Zip code: " +zip_code+" Maximum: "+maximum);
+    //console.log("Category: "+category+" Publisher_campaign: " +publisher_campaign+" Zip code: " +zip_code+"Maximum: "+maximum);
 
 
     if (!category) {
@@ -66,4 +70,4 @@ exports.findQuery.get('/', function (req, res) {
     }).on("error", (err) => {
         console.log("Error: " + err.message);
     }); */
-})
+}
