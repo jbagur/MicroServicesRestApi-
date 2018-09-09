@@ -8,10 +8,7 @@ exports.findQuery = function (req, res) {
     let zip_code = req.query.zip_code;
     let maximum = req.query.maximum;
 
-    console.log(category);
-    console.log(publisher_campaign);
-    console.log(zip_code);
-    console.log(maximum);
+    console.log("Category: "+category+" Publisher_campaign: " +publisher_campaign+" Zip code: " +zip_code+" Maximum: "+maximum);
 
 
     if (!category) {
