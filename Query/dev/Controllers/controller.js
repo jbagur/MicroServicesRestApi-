@@ -71,13 +71,13 @@ exports.findQuery = function (req, res) {
             console.log("JSON: " + (myjson.results)[0].id);
             let list = '';
             for (i = 0; i < myjson.results.lenght; i++) {
-                var a_c = (myjson.results[i].id).toString();
+                var a_c = ((myjson.results)[i].id).toString();
                 list.concat(a_c);
                 if (i != myjson.results.lenght - 1) {
                     list += ",";
                 }
             }
-            console.log("Lista" + list);
+            console.log("Lista: " + list);
             res.send('JSON: ' + data);
         });
     }).on("error", (err) => {
