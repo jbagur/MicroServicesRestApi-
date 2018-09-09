@@ -50,6 +50,7 @@ exports.findQuery = function (req, res) {
         let data = '';
         // A chunk of data has been received
         resp.on('data', (chunk) => {
+            console.log("chunk: " + chunk);
             data += chunk;
         });
         console.log("Data: " + data);
