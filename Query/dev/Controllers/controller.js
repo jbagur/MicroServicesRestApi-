@@ -70,7 +70,7 @@ exports.findQuery = function (req, res) {
             var myjson = JSON.parse(data);
             console.log("JSON: " + (myjson.results)[0].id);
             let list = '';
-            //console.log("JSON results: " + (myjson.results).toString());
+            console.log("JSON lenght: " + Object.keys(myjson.results).length);
             for (i = 0; i < Object.keys(myjson.results).length; i++) {
                 var a_c = ((myjson.results)[i].id).toString();
                 list.concat(a_c);
