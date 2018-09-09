@@ -52,6 +52,7 @@ exports.findQuery = function (req, res) {
         resp.on('data', (chunk) => {
             data += chunk;
         });
+        console.log("Data: " + data);
         var myjson = JSON.parse(data);
         
         let list = '';
@@ -62,7 +63,7 @@ exports.findQuery = function (req, res) {
                 list += ",";
             }
         }
-        console.log(list);
+        console.log("Lista" + list);
         // The whole response has been received
         resp.on('end', () => {
             console.log("Response: " + data);
