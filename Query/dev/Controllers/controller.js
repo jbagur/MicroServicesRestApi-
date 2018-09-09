@@ -64,7 +64,7 @@ exports.findQuery = function (req, res) {
         }*/
         // The whole response has been received
         resp.on('end', () => {
-            console.log("Response: " + data["results"]);
+            console.log("Response: " + data.results);
             res.send('JSON: ' + data);
         });
     }).on("error", (err) => {
