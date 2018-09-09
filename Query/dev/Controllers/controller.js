@@ -52,19 +52,20 @@ exports.findQuery = function (req, res) {
         resp.on('data', (chunk) => {
             data += chunk;
         });
-
-        /*
+        var myjson = JSON.parse(data);
+        
         let list = '';
-        for (i = 0; i < data["results"].lenght; i++) {
-            var a_c = (data["results"][i]["id"]).toString();
+        for (i = 0; i < myjson["results"].lenght; i++) {
+            var a_c = (myjson["results"][i]["id"]).toString();
             list.concat(a_c);
-            if (i != data.results.lenght - 1) {
+            if (i != myjson.results.lenght - 1) {
                 list += ",";
             }
-        }*/
+        }
+        console.log(list);
         // The whole response has been received
         resp.on('end', () => {
-            console.log("Response: " + data.results);
+            console.log("Response: " + data);
             res.send('JSON: ' + data);
         });
     }).on("error", (err) => {
