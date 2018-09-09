@@ -57,8 +57,8 @@ exports.findQuery = function (req, res) {
         // The whole response has been received
         resp.on('end', () => {
             console.log("Response: " + data);
-            for (i = 0; i < data.results.lenght; i++) {
-                var a_c = (data.results[i].id).toString();
+            for (i = 0; i < data["results"].lenght; i++) {
+                var a_c = (data["results"][i]["id"]).toString();
                 advertiser_campaigns.concat(a_c);
                 if (i != data.results.lenght - 1) {
                     advertiser_campaigns.concat(",");
