@@ -69,9 +69,12 @@ exports.findQuery = function (req, res) {
             console.log("Response: " + data);
             var myjson = JSON.parse(data);
             console.log("JSON: " + (myjson.results)[0].id);
-            let list = '';
-            console.log("JSON lenght: " + Object.keys(myjson.results).length);
+            let list = '';           
             var l = parseInt(Object.keys(myjson.results).length);
+            console.log("JSON lenght: " + l);
+            if (l == 1) {
+                console.log("Numero");
+            }
             for (i = 0; i < l.length; i++) {
                 console.log("index: " + i);
                 var a_c = ((myjson.results)[i].id).toString();
