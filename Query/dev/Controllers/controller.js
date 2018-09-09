@@ -75,7 +75,7 @@ exports.findQuery = function (req, res) {
             if (l == 1) {
                 console.log("Numero");
             }
-            for (i = 0; i < l.length; i++) {
+            for (i = 0; i < l; i++) {
                 console.log("index: " + i);
                 var a_c = ((myjson.results)[i].id).toString();
                 list.concat(a_c);
