@@ -6,11 +6,11 @@ exports.findQuery = function (req, res) {
     let category = req.query.category;
     console.log(req.query.category);
     let publisher_campaign = req.query.publisher_campaign;
-    console.log(req.query.category);
+    console.log(req.query.publisher_campaign);
     let zip_code = req.query.zip_code;
-    console.log(req.query.category);
+    console.log(req.query.zip_code);
     let maximum = req.query.maximum;
-    console.log(req.query.category);
+    console.log(req.query.maximum);
 
     //console.log("Category: "+category+" Publisher_campaign: " +publisher_campaign+" Zip code: " +zip_code+"Maximum: "+maximum);
 
