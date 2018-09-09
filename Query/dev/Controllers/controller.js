@@ -46,7 +46,7 @@ exports.findQuery = function (req, res) {
         console.log("No maximum");
     }
     
-    http.get('18.212.105.67:3001/?category=' + category, (resp) => {
+    http.get('http://18.212.105.67:3001/?category=' + category, (resp) => {
         let data = '';
         // A chunk of data has been received
         resp.on('data', (chunk) => {
