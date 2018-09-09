@@ -101,5 +101,20 @@ exports.findQuery = function (req, res) {
         });
     }).on("error", (err) => {
         console.log("Error: " + err.message);
-    });
+        });
+    /*
+    http.get('http://18.212.105.67:3003/?advertiser_campaigns=' + list + '&zip_code=' + zip_code, (resp) => {
+        let data = '';
+        // A chunk of data has been recieved
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+        // The whole response has been received
+        resp.on('end', () => {
+            console.log("Response: " + data);
+            res.send('JSON: ' + data);
+        });
+    }).on("error", (err) => {
+        console.log("Error: " + err.message);
+    });/*
 }
