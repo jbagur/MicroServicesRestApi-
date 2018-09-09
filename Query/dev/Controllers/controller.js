@@ -3,19 +3,19 @@ var con = require('../Models/model.js');
 
 
 exports.findQuery = function (req, res) {
-    let category = req.query.category;
-    console.log(req.query.category);
-    let publisher_campaign = req.query.publisher_campaign;
-    console.log(req.query.publisher_campaign);
-    let zip_code = req.query.zip_code;
-    console.log(req.query.zip_code);
-    let maximum = req.query.maximum;
-    console.log(req.query.maximum);
+    let category = 1;//req.query.category;
+    //console.log(req.query.category);
+    let publisher_campaign = 99;//req.query.publisher_campaign;
+    //console.log(req.query.publisher_campaign);
+    let zip_code = 90210;// req.query.zip_code;
+    //console.log(req.query.zip_code);
+    let maximum = 20;//req.query.maximum;
+    //console.log(req.query.maximum);
 
     //console.log("Category: "+category+" Publisher_campaign: " +publisher_campaign+" Zip code: " +zip_code+"Maximum: "+maximum);
 
 
-    if (!category) {
+    if (category==null) {
         console.log("No Category");
         res.status(400).json({
             status: 400,
@@ -24,7 +24,7 @@ exports.findQuery = function (req, res) {
         return;
     }
     
-    if (!publisher_campaign) {
+    if (publisher_campaign==null) {
         console.log("No Campaign");
         res.status(400).json({
             status: 400,
@@ -33,13 +33,17 @@ exports.findQuery = function (req, res) {
         return;
     }
 
-    if (!zip_code) {
+    if (zip_code==null) {
         console.log("No Zip code");
         res.status(400).json({
             status: 400,
             message: "No zip code"
         })
         return;
+    }
+
+    if (maximum == null) {
+        console.log("No maximum");
     }
     
     https.get('18.212.105.67:3001/?category=' + category, (resp) => {
