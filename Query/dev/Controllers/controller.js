@@ -45,9 +45,7 @@ exports.findQuery = function (req, res) {
     if (maximum == null) {
         console.log("No maximum");
     }
-
-    var advertiser_campaigns = '';
-
+    
     http.get('http://18.212.105.67:3001/?category=' + category, (resp) => {
         let data = '';
         // A chunk of data has been received
@@ -57,20 +55,11 @@ exports.findQuery = function (req, res) {
         // The whole response has been received
         resp.on('end', () => {
             console.log("Response: " + data);
-            /*
-            for (i = 0; i < data["results"].lenght; i++) {
-                var a_c = (data["results"][i]["id"]).toString();
-                advertiser_campaigns.concat(a_c);
-                if (i != data.results.lenght - 1) {
-                    advertiser_campaigns.concat(",");
-                }
-            }*/
-            res.send('JSON: ' + data, ' List:' + advertiser_campaigns);
+            res.send('JSON: ' + data);
         });
     }).on("error", (err) => {
         console.log("Error: " + err.message);
     }); 
-
 
     /*
     http.get('http://18.212.105.67:3002/?advertiser_campaigns=429&publisher_campaign=73=' + category, (resp) => {
@@ -85,5 +74,5 @@ exports.findQuery = function (req, res) {
         });
     }).on("error", (err) => {
         console.log("Error: " + err.message);
-    });*/
+    });/*
 }
