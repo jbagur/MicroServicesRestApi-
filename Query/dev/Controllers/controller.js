@@ -1,6 +1,6 @@
 var express = require('express');
 var con = require('../Models/model.js');
-
+var https = require('https');
 
 exports.findQuery = function (req, res) {
     let category = 1;//req.query.category;
