@@ -14,8 +14,7 @@ exports.findQuery = function (req, res) {
     //console.log(req.query.maximum);
 
     //console.log("Category: "+category+" Publisher_campaign: " +publisher_campaign+" Zip code: " +zip_code+"Maximum: "+maximum);
-
-
+    
     if (category==null) {
         console.log("No Category");
         res.status(400).json({
@@ -56,8 +55,7 @@ exports.findQuery = function (req, res) {
                 data += chunk;
             });
             // The whole response has been received
-            resp.on('end', () => {
-                console.log("Response: " + data);
+            resp.on('end', () => {                
                 var myjson = JSON.parse(data);
                 //console.log("JSON: " + (myjson.results)[0].id);     
                 var l = parseInt(Object.keys(myjson.results).length);
@@ -72,6 +70,7 @@ exports.findQuery = function (req, res) {
                     }
                 }
                 console.log("Matching: http://18.212.105.67:3001/?category=" + category);
+                console.log("Response: " + data);
                 //console.log("Lista: " + list);
                 //res.send('JSON: ' + data);
                 Exclusion(advertiser_campaigns, publisher_campaign);
@@ -92,7 +91,7 @@ exports.findQuery = function (req, res) {
             // The whole response has been received
             resp.on('end', () => {
                 console.log("Exclusions: http://18.212.105.67:3002/?advertiser_campaigns=" + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign);
-                //console.log("Response: " + data);
+                console.log("Response: " + data);
                 //res.send('JSON: ' + data);
                 Targeting(advertiser_campaigns, zip_code);
             });
@@ -102,6 +101,24 @@ exports.findQuery = function (req, res) {
     }
          
     function Targeting(advertiser_campaigns, zip_code) {
+        http.get('http://18.212.105.67:3003/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code, (resp) => {
+            let data = '';
+            // A chunk of data has been recieved
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+            // The whole response has been received
+            resp.on('end', () => {
+                console.log('Targeting: http://18.212.105.67:3003/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code)
+                console.log("Response: " + data);
+                res.send('JSON: ' + data);
+            });
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
+        });
+    }
+
+    function Ranking(advertiser_campaigns, advertiser_campaign_bids) {
         http.get('http://18.212.105.67:3003/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code, (resp) => {
             let data = '';
             // A chunk of data has been recieved
