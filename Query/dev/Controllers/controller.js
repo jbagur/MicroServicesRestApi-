@@ -84,7 +84,7 @@ exports.findQuery = function (req, res) {
     }
 
     function func2(listado) {
-        
+        console.log("Listado:" + listado);
         http.get('http://18.212.105.67:3002/?advertiser_campaigns=' + listado + '&publisher_campaign=' + publisher_campaign, (resp) => {
             let data = '';
             // A chunk of data has been recieved
