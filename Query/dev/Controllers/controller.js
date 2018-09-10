@@ -71,7 +71,7 @@ exports.findQuery = function (req, res) {
                         list += ",";
                     }
                 }
-                console.log("Matching");
+                console.log("Matching: http://18.212.105.67:3001/?category=" + category);
                 //console.log("Lista: " + list);
                 //res.send('JSON: ' + data);
             });
@@ -90,7 +90,7 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
-                console.log("Exclusions");
+                console.log("Exclusions: http://18.212.105.67:3002/?advertiser_campaigns=" + list + '&publisher_campaign=' + publisher_campaign);
                 console.log("Response: " + data);
                 res.send('JSON: ' + data);
             });
