@@ -72,14 +72,13 @@ exports.findQuery = function (req, res) {
                     }
                 }
                 console.log("Matching");
-                return list;
                 //console.log("Lista: " + list);
                 //res.send('JSON: ' + data);
             });
-        })
-            .on("error", (err) => {
-            console.log("Error: " + err.message);
-        });
+        }).on("error", (err) => {
+                console.log("Error: " + err.message);
+            });
+        return list;
     }
 
     function Exclusion(list,publisher_campaign) {
