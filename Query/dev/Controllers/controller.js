@@ -47,9 +47,10 @@ exports.findQuery = function (req, res) {
         console.log("No maximum");
     }
 
-    let list = '';
+    
 
     function func1() {
+        let list = '';
         console.log("Matching");
         http.get('http://18.212.105.67:3001/?category=' + category, (resp) => {
             let data = '';
@@ -73,6 +74,7 @@ exports.findQuery = function (req, res) {
                         list += ",";
                     }
                 }
+                return list;
                 //console.log("Lista: " + list);
                 //res.send('JSON: ' + data);
             });
@@ -81,9 +83,9 @@ exports.findQuery = function (req, res) {
         });
     }
 
-    function func2() {
+    function func2(listado) {
         console.log("Exclusions");
-        http.get('http://18.212.105.67:3002/?advertiser_campaigns=' + list + '&publisher_campaign=' + publisher_campaign, (resp) => {
+        http.get('http://18.212.105.67:3002/?advertiser_campaigns=' + listado + '&publisher_campaign=' + publisher_campaign, (resp) => {
             let data = '';
             // A chunk of data has been recieved
             resp.on('data', (chunk) => {
@@ -115,11 +117,12 @@ exports.findQuery = function (req, res) {
         console.log("Error: " + err.message);
     });*/
 
+    var listado;
 
     async.waterfall([
         // A list of functions
-        func1(),
-        func2()
+        listado = func1(),
+        func2(listado)
     ],
         function (err, results) {
             // Optional final callback will get results for all prior functions
