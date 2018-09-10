@@ -74,8 +74,9 @@ exports.findQuery = function (req, res) {
                 console.log("Matching: http://18.212.105.67:3001/?category=" + category);
                 //console.log("Lista: " + list);
                 //res.send('JSON: ' + data);
+                Exclusion(list, publisher_campaign);
             });
-            Exclusion(list, publisher_campaign);
+            
         }).on("error", (err) => {
                 console.log("Error: " + err.message);
             });        
