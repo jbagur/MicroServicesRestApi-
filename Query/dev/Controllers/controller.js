@@ -42,8 +42,11 @@ exports.findQuery = function (req, res) {
         return;
     }
 
+    let maximum_text = '&maximum=';
     if (maximum == null) {
         console.log("No maximum");
+    } else {        
+        maximum_text += maximum;
     }
 
     function Match(category) {
@@ -86,27 +89,8 @@ exports.findQuery = function (req, res) {
     }
 
     function Exclusion(advertiser_campaigns, publisher_campaign, advertiser_campaigns_bids) {
+        let exclusive_advertiser_campaigns = '';
         http.get('http://18.212.105.67:3002/?advertiser_campaigns=' + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign, (resp) => {
-            let data = '';
-            // A chunk of data has been received
-            resp.on('data', (chunk) => {
-                data += chunk;
-            });
-            // The whole response has been received
-            resp.on('end', () => {
-                console.log("Exclusions: http://18.212.105.67:3002/?advertiser_campaigns=" + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign);
-                console.log("Response: " + data);
-                //res.send('JSON: ' + data);
-                Targeting(advertiser_campaigns, zip_code, advertiser_campaigns_bids);
-            });
-        }).on("error", (err) => {
-            console.log("Error: " + err.message);
-        });
-    }
-         
-    function Targeting(advertiser_campaigns, zip_code, advertiser_campaigns_bids) {
-        targeted_advertiser_campaigns = '';
-        http.get('http://18.212.105.67:3003/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code, (resp) => {
             let data = '';
             // A chunk of data has been received
             resp.on('data', (chunk) => {
@@ -120,25 +104,27 @@ exports.findQuery = function (req, res) {
                 //console.log("JSON lenght: " + l);
                 for (i = 0; i < l; i++) {
                     //console.log("index: " + i);
-                    var t_a_c = (myjson.results)[i].id;
-                    targeted_advertiser_campaigns += t_a_c;
+                    var e_a_c = (myjson.results)[i].id;
+                    exclusive_advertiser_campaigns += e_a_c;
                     //console.log("Agregar: " + a_c);
                     if (i != l - 1) {
-                        targeted_advertiser_campaigns += ",";
+                        exclusive_advertiser_campaigns += ",";
                     }
                 }
-                console.log('Targeting: http://18.212.105.67:3003/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code)
+                console.log("Exclusions: http://18.212.105.67:3002/?advertiser_campaigns=" + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign);
                 console.log("Response: " + data);
                 //res.send('JSON: ' + data);
-                Ranking(targeted_advertiser_campaigns, advertiser_campaigns_bids);
+                Targeting(advertiser_campaigns, zip_code, advertiser_campaigns_bids, exclusive_advertiser_campaigns);
             });
         }).on("error", (err) => {
             console.log("Error: " + err.message);
         });
     }
-
-    function Ranking(targeted_advertiser_campaigns, advertiser_campaigns_bids) {
-        http.get('http://18.212.105.67:3004/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids, (resp) => {
+         
+    function Targeting(advertiser_campaigns, zip_code, advertiser_campaigns_bids, exclusive_advertiser_campaigns) {
+        let targeted_advertiser_campaigns = '';
+        let exclusive_advertiser_campaigns_array = exclusive_advertiser_campaigns.split(',');
+        http.get('http://18.212.105.67:3003/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code, (resp) => {
             let data = '';
             // A chunk of data has been received
             resp.on('data', (chunk) => {
@@ -146,18 +132,77 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
+                var myjson = JSON.parse(data);
+                //console.log("JSON: " + (myjson.results)[0].id);     
+                var l = parseInt(Object.keys(myjson.results).length);
+                //console.log("JSON lenght: " + l);
+                for (i = 0; i < l; i++) {
+                    for (j = 0; i < exclusive_advertiser_campaigns_array.length; i++) {
+                        //console.log("index: " + i);
+                        if ((myjson.results)[i].id == exclusive_advertiser_campaigns_array[j]) {
+                            if (i != 0) {
+                                targeted_advertiser_campaigns += ",";
+                            }
+                            var t_a_c = (myjson.results)[i].id;
+                            targeted_advertiser_campaigns += t_a_c;
+                            //console.log("Agregar: " + a_c);                            
+                        }                        
+                    }                    
+                }
+                console.log("Listado de advertisers: " + targeted_advertiser_campaigns);
+                console.log('Targeting: http://18.212.105.67:3003/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code)
+                console.log("Response: " + data);
+                res.send('JSON: ' + data);
+                /*Ranking(targeted_advertiser_campaigns, advertiser_campaigns_bids, maximum);*/
+            });
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
+        });
+    }
+    /*
+    function Ranking(targeted_advertiser_campaigns, advertiser_campaigns_bids, maximum) {
+        let ranked_advertiser_campaigns = '';
+        let ranked_advertiser_campaigns_bids = '';
+        http.get('http://18.212.105.67:3004/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids + maximum_text, (resp) => {
+            let data = '';
+            let listOfTAC = targeted_advertiser_campaigns.split(',');
+            let listOfACB = advertiser_campaigns_bids.split(',');
+            // A chunk of data has been received
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+            // The whole response has been received
+            resp.on('end', () => {
+                var myjson = JSON.parse(data);
+                //console.log("JSON: " + (myjson.results)[0].id);     
+                var l = parseInt(Object.keys(myjson.results).length);
+                //console.log("JSON lenght: " + l);
+                for (i = 0; i < l; i++) {
+                    for (j = 0; j < listOfTAC.length; i++)
+                        var r_a_c = (myjson.results)[i].id;
+                        if (r_a_c == listOfTAC[i]) {
+                            //console.log("index: " + i);                            
+                            ranked_advertiser_campaigns += r_a_c;
+                            ranked_advertiser_campaigns_bids += listOfACB[j];
+                            //console.log("Agregar: " + a_c);
+                            if (i != l - 1) {
+                                ranked_advertiser_campaigns += ",";
+                                ranked_advertiser_campaigns_bids += ",";
+                            }
+                        }                        
+                }
                 console.log('Ranking: http://18.212.105.67:3004/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids);
                 console.log("Response: " + data);
                 //res.send('JSON: ' + data);
-                Ads(targeted_advertiser_campaigns);
+                Ads(ranked_advertiser_campaigns);
             });
         }).on("error", (err) => {
             console.log("Error: " + err.message);
         });
     }
 
-    function Ads(targeted_advertiser_campaigns) {
-        http.get('http://18.212.105.67:3005/?advertiser_campaigns=' + targeted_advertiser_campaigns, (resp) => {
+    function Ads(ranked_advertiser_campaigns) {
+        http.get('http://18.212.105.67:3005/?advertiser_campaigns=' + ranked_advertiser_campaigns, (resp) => {
             let data = '';
             // A chunk of data has been received
             resp.on('data', (chunk) => {
@@ -165,7 +210,7 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
-                console.log('Ranking: http://18.212.105.67:3005/?advertiser_campaigns=' + targeted_advertiser_campaigns);
+                console.log('Ads: http://18.212.105.67:3005/?advertiser_campaigns=' + ranked_advertiser_campaigns);
                 console.log("Response: " + data);
                 res.send('JSON: ' + data);
             });
@@ -173,6 +218,24 @@ exports.findQuery = function (req, res) {
             console.log("Error: " + err.message);
         });
     }
+
+    function Pricing(ranked_advertiser_campaigns,ad) {
+        http.get('http://18.212.105.67:3006/?advertiser_campaigns=' + ranked_advertiser_campaigns, (resp) => {
+            let data = '';
+            // A chunk of data has been received
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+            // The whole response has been received
+            resp.on('end', () => {
+                console.log('Pricing: http://18.212.105.67:3006/?advertiser_campaigns=' + ranked_advertiser_campaigns);
+                console.log("Response: " + data);
+                res.send('JSON: ' + data);
+            });
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
+        });
+    }*/
 
     Match(category);
 
