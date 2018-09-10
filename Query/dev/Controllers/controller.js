@@ -100,8 +100,10 @@ exports.findQuery = function (req, res) {
         });
     }
 
-    Match(category)
-        .then(Exclusion(list, publisher_campaign)
+    var advertiser_campaigns = Match(category);
+
+    advertiser_campaigns
+        .then(Exclusion(advertiser_campaigns, publisher_campaign)
     );
 
     /*
