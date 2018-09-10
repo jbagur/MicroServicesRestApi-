@@ -132,6 +132,11 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
+                console.log("Listado de advertisers: " + targeted_advertiser_campaigns);
+                console.log('Targeting: http://18.212.105.67:3003/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code)
+                console.log("Response: " + data);
+                res.send('JSON: ' + data);
+
                 var myjson = JSON.parse(data);
                 //console.log("JSON: " + (myjson.results)[0].id);     
                 var l = parseInt(Object.keys(myjson.results).length);
@@ -149,10 +154,7 @@ exports.findQuery = function (req, res) {
                         }                        
                     }                    
                 }
-                console.log("Listado de advertisers: " + targeted_advertiser_campaigns);
-                console.log('Targeting: http://18.212.105.67:3003/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code)
-                console.log("Response: " + data);
-                res.send('JSON: ' + data);
+                
                 /*Ranking(targeted_advertiser_campaigns, advertiser_campaigns_bids, maximum);*/
             });
         }).on("error", (err) => {
