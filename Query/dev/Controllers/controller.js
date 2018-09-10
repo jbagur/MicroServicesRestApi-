@@ -49,51 +49,55 @@ exports.findQuery = function (req, res) {
 
     let list = '';
 
-    function func1 = http.get('http://18.212.105.67:3001/?category=' + category, (resp) => {
-        console.log("Matching");
-        let data = '';
-        // A chunk of data has been received
-        resp.on('data', (chunk) => {
-            data += chunk;
-        });
-        // The whole response has been received
-        resp.on('end', () => {
-            console.log("Response: " + data);
-            var myjson = JSON.parse(data);
-            //console.log("JSON: " + (myjson.results)[0].id);     
-            var l = parseInt(Object.keys(myjson.results).length);
-            //console.log("JSON lenght: " + l);
-            for (i = 0; i < l; i++) {
-                //console.log("index: " + i);
-                var a_c = ((myjson.results)[i].id).toString();
-                list += a_c;
-                //console.log("Agregar: " + a_c);
-                if (i != l - 1) {
-                    list += ",";
+    function func1() {
+        http.get('http://18.212.105.67:3001/?category=' + category, (resp) => {
+            console.log("Matching");
+            let data = '';
+            // A chunk of data has been received
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+            // The whole response has been received
+            resp.on('end', () => {
+                console.log("Response: " + data);
+                var myjson = JSON.parse(data);
+                //console.log("JSON: " + (myjson.results)[0].id);     
+                var l = parseInt(Object.keys(myjson.results).length);
+                //console.log("JSON lenght: " + l);
+                for (i = 0; i < l; i++) {
+                    //console.log("index: " + i);
+                    var a_c = ((myjson.results)[i].id).toString();
+                    list += a_c;
+                    //console.log("Agregar: " + a_c);
+                    if (i != l - 1) {
+                        list += ",";
+                    }
                 }
-            }
-            //console.log("Lista: " + list);
-            //res.send('JSON: ' + data);
+                //console.log("Lista: " + list);
+                //res.send('JSON: ' + data);
+            });
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
         });
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-    }); 
+    }
 
-    function func2 = http.get('http://18.212.105.67:3002/?advertiser_campaigns=' + list + '&publisher_campaign=' + publisher_campaign, (resp) => {
-        console.log("Exclusions");
-        let data = '';
-        // A chunk of data has been recieved
-        resp.on('data', (chunk) => {
-            data += chunk;
+    function func2() {
+        http.get('http://18.212.105.67:3002/?advertiser_campaigns=' + list + '&publisher_campaign=' + publisher_campaign, (resp) => {
+            console.log("Exclusions");
+            let data = '';
+            // A chunk of data has been recieved
+            resp.on('data', (chunk) => {
+                data += chunk;
+            });
+            // The whole response has been received
+            resp.on('end', () => {
+                console.log("Response: " + data);
+                res.send('JSON: ' + data);
+            });
+        }).on("error", (err) => {
+            console.log("Error: " + err.message);
         });
-        // The whole response has been received
-        resp.on('end', () => {
-            console.log("Response: " + data);
-            res.send('JSON: ' + data);
-        });
-    }).on("error", (err) => {
-        console.log("Error: " + err.message);
-        });
+    }
 
     /*
     http.get('http://18.212.105.67:3003/?advertiser_campaigns=' + list + '&zip_code=' + zip_code, (resp) => {
