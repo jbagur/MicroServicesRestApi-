@@ -50,8 +50,8 @@ exports.findQuery = function (req, res) {
     let list = '';
 
     function func1() {
+        console.log("Matching");
         http.get('http://18.212.105.67:3001/?category=' + category, (resp) => {
-            console.log("Matching");
             let data = '';
             // A chunk of data has been received
             resp.on('data', (chunk) => {
@@ -82,8 +82,8 @@ exports.findQuery = function (req, res) {
     }
 
     function func2() {
+        console.log("Exclusions");
         http.get('http://18.212.105.67:3002/?advertiser_campaigns=' + list + '&publisher_campaign=' + publisher_campaign, (resp) => {
-            console.log("Exclusions");
             let data = '';
             // A chunk of data has been recieved
             resp.on('data', (chunk) => {
