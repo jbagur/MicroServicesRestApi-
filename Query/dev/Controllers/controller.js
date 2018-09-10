@@ -100,7 +100,9 @@ exports.findQuery = function (req, res) {
     }
 
     func1()
-        .then(func2())
+        .then(function (func2) {
+            func2()
+        });
 
     /*
     http.get('http://18.212.105.67:3003/?advertiser_campaigns=' + list + '&zip_code=' + zip_code, (resp) => {
