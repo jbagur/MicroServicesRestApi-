@@ -51,7 +51,6 @@ exports.findQuery = function (req, res) {
 
     function func1() {
         let list = '';
-        console.log("Matching");
         http.get('http://18.212.105.67:3001/?category=' + category, (resp) => {
             let data = '';
             // A chunk of data has been received
@@ -74,6 +73,7 @@ exports.findQuery = function (req, res) {
                         list += ",";
                     }
                 }
+                console.log("Matching");
                 return list;
                 //console.log("Lista: " + list);
                 //res.send('JSON: ' + data);
@@ -84,7 +84,7 @@ exports.findQuery = function (req, res) {
     }
 
     function func2(listado) {
-        console.log("Exclusions");
+        
         http.get('http://18.212.105.67:3002/?advertiser_campaigns=' + listado + '&publisher_campaign=' + publisher_campaign, (resp) => {
             let data = '';
             // A chunk of data has been recieved
@@ -93,6 +93,7 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
+                console.log("Exclusions");
                 console.log("Response: " + data);
                 res.send('JSON: ' + data);
             });
