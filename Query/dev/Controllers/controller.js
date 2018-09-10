@@ -75,10 +75,10 @@ exports.findQuery = function (req, res) {
                 //console.log("Lista: " + list);
                 //res.send('JSON: ' + data);
             });
+            Exclusion(list, publisher_campaign);
         }).on("error", (err) => {
                 console.log("Error: " + err.message);
-            });
-        Exclusion(list, publisher_campaign);
+            });        
     }
 
     function Exclusion(list,publisher_campaign) {
