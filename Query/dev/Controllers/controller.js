@@ -72,11 +72,11 @@ exports.findQuery = function (req, res) {
                     }
                 }
                 console.log("Matching");
+                return list;
                 //console.log("Lista: " + list);
                 //res.send('JSON: ' + data);
             });
         })
-            .then(Exclusion(list, publisher_campaign))
             .on("error", (err) => {
             console.log("Error: " + err.message);
         });
@@ -100,7 +100,9 @@ exports.findQuery = function (req, res) {
         });
     }
 
-    Match(category);
+    Match(category)
+        .then(Exclusion(list, publisher_campaign)
+    );
 
     /*
     http.get('http://18.212.105.67:3003/?advertiser_campaigns=' + list + '&zip_code=' + zip_code, (resp) => {
