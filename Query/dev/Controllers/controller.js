@@ -146,7 +146,7 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
-                console.log('Ranking: http://18.212.105.67:3004/?advertiser_campaigns=' + advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids);
+                console.log('Ranking: http://18.212.105.67:3004/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids);
                 console.log("Response: " + data);
                 //res.send('JSON: ' + data);
                 Ads(targeted_advertiser_campaigns);
