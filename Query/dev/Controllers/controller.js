@@ -1,7 +1,7 @@
 var express = require('express');
 var con = require('../Models/model.js');
 var http = require('http');
-var async = require("async");
+var Promise = require('promise');
 
 exports.findQuery = function (req, res) {
     let category = 1;//req.query.category;
@@ -99,6 +99,9 @@ exports.findQuery = function (req, res) {
         });
     }
 
+    func1()
+        .then(func2())
+
     /*
     http.get('http://18.212.105.67:3003/?advertiser_campaigns=' + list + '&zip_code=' + zip_code, (resp) => {
         let data = '';
@@ -115,14 +118,5 @@ exports.findQuery = function (req, res) {
         console.log("Error: " + err.message);
     });*/
     
-
-    async.waterfall([
-        // A list of functions
-        func1(),
-        func2()
-    ],
-        function (err, results) {
-            // Optional final callback will get results for all prior functions
-        });
 
 }
