@@ -82,8 +82,8 @@ exports.findQuery = function (req, res) {
             });        
     }
 
-    function Exclusion(advertiser_campaigns,publisher_campaign) {
-        http.get('http://18.212.105.67:3002/?advertiser_campaigns=' + list + '&publisher_campaign=' + publisher_campaign, (resp) => {
+    function Exclusion(advertiser_campaigns, publisher_campaign) {
+        http.get('http://18.212.105.67:3002/?advertiser_campaigns=' + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign, (resp) => {
             let data = '';
             // A chunk of data has been recieved
             resp.on('data', (chunk) => {
@@ -91,7 +91,7 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
-                console.log("Exclusions: http://18.212.105.67:3002/?advertiser_campaigns=" + list + '&publisher_campaign=' + publisher_campaign);
+                console.log("Exclusions: http://18.212.105.67:3002/?advertiser_campaigns=" + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign);
                 //console.log("Response: " + data);
                 //res.send('JSON: ' + data);
                 Targeting(advertiser_campaigns, zip_code);
