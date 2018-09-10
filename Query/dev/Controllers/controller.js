@@ -78,7 +78,7 @@ exports.findQuery = function (req, res) {
         }).on("error", (err) => {
                 console.log("Error: " + err.message);
             });
-        return list;
+        Exclusion(list, publisher_campaign);
     }
 
     function Exclusion(list,publisher_campaign) {
@@ -99,12 +99,7 @@ exports.findQuery = function (req, res) {
         });
     }
 
-    var advertiser_campaigns = Match(category);
-
-    advertiser_campaigns
-        .then(Exclusion(advertiser_campaigns, publisher_campaign)
-    );
-
+    Match(category);
     /*
     http.get('http://18.212.105.67:3003/?advertiser_campaigns=' + list + '&zip_code=' + zip_code, (resp) => {
         let data = '';
