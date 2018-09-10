@@ -47,9 +47,8 @@ exports.findQuery = function (req, res) {
         console.log("No maximum");
     }
 
-    let list = '';
-
-    function func1() {
+    function Match(category) {
+        var list = '';
         http.get('http://18.212.105.67:3001/?category=' + category, (resp) => {
             let data = '';
             // A chunk of data has been received
@@ -76,12 +75,14 @@ exports.findQuery = function (req, res) {
                 //console.log("Lista: " + list);
                 //res.send('JSON: ' + data);
             });
-        }).on("error", (err) => {
+        })
+            .then(Exclusion(list, publisher_campaign))
+            .on("error", (err) => {
             console.log("Error: " + err.message);
         });
     }
 
-    function func2() {
+    function Exclusion(list,publisher_campaign) {
         http.get('http://18.212.105.67:3002/?advertiser_campaigns=' + list + '&publisher_campaign=' + publisher_campaign, (resp) => {
             let data = '';
             // A chunk of data has been recieved
@@ -99,10 +100,7 @@ exports.findQuery = function (req, res) {
         });
     }
 
-    func1()
-        .then(function (func2) {
-            func2()
-        });
+    Match(category);
 
     /*
     http.get('http://18.212.105.67:3003/?advertiser_campaigns=' + list + '&zip_code=' + zip_code, (resp) => {
