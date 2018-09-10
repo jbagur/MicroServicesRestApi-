@@ -1,6 +1,7 @@
 var express = require('express');
 var con = require('../Models/model.js');
 var http = require('http');
+var async = require("async");
 
 exports.findQuery = function (req, res) {
     let category = 1;//req.query.category;
@@ -47,25 +48,14 @@ exports.findQuery = function (req, res) {
     }
 
     let list = '';
-    http.get('http://18.212.105.67:3001/?category=' + category, (resp) => {
+
+    function func1 = http.get('http://18.212.105.67:3001/?category=' + category, (resp) => {
         console.log("Matching");
         let data = '';
         // A chunk of data has been received
         resp.on('data', (chunk) => {
             data += chunk;
         });
-        /*console.log("Data: " + data);
-        var myjson = JSON.parse(data);
-        
-        let list = '';
-        for (i = 0; i < myjson["results"].lenght; i++) {
-            var a_c = (myjson["results"][i]["id"]).toString();
-            list.concat(a_c);
-            if (i != myjson.results.lenght - 1) {
-                list += ",";
-            }
-        }
-        console.log("Lista" + list);*/
         // The whole response has been received
         resp.on('end', () => {
             console.log("Response: " + data);
@@ -89,7 +79,7 @@ exports.findQuery = function (req, res) {
         console.log("Error: " + err.message);
     }); 
 
-    http.get('http://18.212.105.67:3002/?advertiser_campaigns=' + list + '&publisher_campaign=' + publisher_campaign, (resp) => {
+    function func2 = http.get('http://18.212.105.67:3002/?advertiser_campaigns=' + list + '&publisher_campaign=' + publisher_campaign, (resp) => {
         console.log("Exclusions");
         let data = '';
         // A chunk of data has been recieved
@@ -104,6 +94,7 @@ exports.findQuery = function (req, res) {
     }).on("error", (err) => {
         console.log("Error: " + err.message);
         });
+
     /*
     http.get('http://18.212.105.67:3003/?advertiser_campaigns=' + list + '&zip_code=' + zip_code, (resp) => {
         let data = '';
@@ -119,4 +110,15 @@ exports.findQuery = function (req, res) {
     }).on("error", (err) => {
         console.log("Error: " + err.message);
     });*/
+
+
+    async.waterfall([
+        // A list of functions
+        func1(),
+        func2()
+    ],
+        function (err, results) {
+            // Optional final callback will get results for all prior functions
+        });
+
 }
