@@ -4,13 +4,13 @@ var http = require('http');
 
 
 exports.findQuery = function (req, res) {
-    let category = 1//req.query.category;
+    let category = req.query.category;
     //console.log(req.query.category);
-    let publisher_campaign = 79//req.query.publisher_campaign;
+    let publisher_campaign = req.query.publisher_campaign;
     //console.log(req.query.publisher_campaign);
-    let zip_code = 1//req.query.zip_code;
+    let zip_code = req.query.zip_code;
     //console.log(req.query.zip_code);
-    let maximum = 20//req.query.maximum;
+    let maximum = req.query.maximum;
     //console.log(req.query.maximum);
     var query_id = "";
     //console.log("Category: "+category+" Publisher_campaign: " +publisher_campaign+" Zip code: " +zip_code+"Maximum: "+maximum);
@@ -69,7 +69,7 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
-                console.log("Exclusions: http://18.212.105.67:3001/?category=" + category);
+                console.log("Matching: http://18.212.105.67:3001/?category=" + category);
                 console.log("Response: " + data);
                 var myjson = JSON.parse(data);
                 if (typeof myjson == "undefined") {
