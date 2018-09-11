@@ -18,7 +18,9 @@ exports.findQuery = function (req, res) {
     con.query('INSERT INTO queries SET ?', { category: category, publisher_campaign: publisher_campaign, zip_code: zip_code, maximum: maximum }, function (error, results, fields) {
         if (error) {
             console.log('Query error. ' + error.message);
+            callback(JSON.stringify({ "status": 500, "messages": [error.message] }));
         }
+        callback(null, { "status": 200, "response": { 'id': results.insertId } });
         query_id = results.insertId;
     });
     console.log("query_id: " + query_id);
