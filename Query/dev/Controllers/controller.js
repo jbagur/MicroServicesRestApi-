@@ -144,7 +144,7 @@ exports.findQuery = function (req, res) {
                 //console.log("JSON lenght: " + l);
                 for (i = 0; i < l; i++) {
                     var t_a_c = (myjson.results)[i].id;
-                    targeted_advertiser_campaigns += e_a_c;
+                    targeted_advertiser_campaigns += t_a_c;
                     //console.log("Agregar: " + a_c);
                     if (i != l - 1) {
                         targeted_advertiser_campaigns += ",";
