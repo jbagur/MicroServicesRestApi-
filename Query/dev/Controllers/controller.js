@@ -106,7 +106,9 @@ exports.findQuery = function (req, res) {
                 for (i = 0; i < l; i++) {
                     //console.log("index: " + i);
                     var e_a_c = (myjson.results)[i].id;
+                    var exclusion_list = [];
                     exclusive_advertiser_campaigns += e_a_c;
+                    exclusion_list.push(e_a_c)
                     //console.log("Agregar: " + a_c);
                     if (i != l - 1) {
                         exclusive_advertiser_campaigns += ",";
@@ -115,16 +117,15 @@ exports.findQuery = function (req, res) {
                 console.log("Exclusions: http://18.212.105.67:3002/?advertiser_campaigns=" + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign);
                 console.log("Response: " + data);
                 //res.send('JSON: ' + data);
-                Targeting(advertiser_campaigns, zip_code, advertiser_campaigns_bids, exclusive_advertiser_campaigns);
+                Targeting(advertiser_campaigns, zip_code, advertiser_campaigns_bids, exclusive_advertiser_campaigns,exclusion_list);
             });
         }).on("error", (err) => {
             console.log("Error: " + err.message);
         });
     }
          
-    function Targeting(advertiser_campaigns, zip_code, advertiser_campaigns_bids, exclusive_advertiser_campaigns) {
+    function Targeting(advertiser_campaigns, zip_code, advertiser_campaigns_bids, exclusive_advertiser_campaigns,exclusion_list) {
         let targeted_advertiser_campaigns = '';
-        let exclusive_advertiser_campaigns_array = exclusive_advertiser_campaigns.split(',');
         http.get('http://18.212.105.67:3003/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code, (resp) => {
             let data = '';
             // A chunk of data has been received
