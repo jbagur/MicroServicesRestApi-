@@ -3,6 +3,7 @@ var con = require('../Models/model.js');
 var http = require('http');
 var Promise = require('promise');
 
+
 exports.findQuery = function (req, res) {
     let category = 1;//req.query.category;
     //console.log(req.query.category);
@@ -12,9 +13,17 @@ exports.findQuery = function (req, res) {
     //console.log(req.query.zip_code);
     let maximum = 20;//req.query.maximum;
     //console.log(req.query.maximum);
-
+    var query_id = "";
     //console.log("Category: "+category+" Publisher_campaign: " +publisher_campaign+" Zip code: " +zip_code+"Maximum: "+maximum);
-    
+    connection.query('INSERT INTO queries SET ?', { category: category, publisher_campaign: publisher_campaign, zip_code: zip_code, maximum: maximum }, function (error, results, fields) {
+        if (error) {
+            console.log('Query error. ' + error.message);
+            callback(JSON.stringify({ "status": 500, "messages": [error.message] }));
+        }
+        query_id = results.insertId;
+    });
+    console.log("query_id: " + query_id);
+
     if (category==null) {
         console.log("No Category");
         res.status(400).json({
