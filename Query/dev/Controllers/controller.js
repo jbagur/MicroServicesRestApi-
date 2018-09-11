@@ -201,7 +201,9 @@ exports.findQuery = function (req, res) {
             resp.on('end', () => {
                 console.log('Ads: http://18.212.105.67:3005/?advertiser_campaigns=' + ranked_advertiser_campaigns);
                 console.log("Response: " + data);
-                res.send('JSON: ' + data);
+                id_query = "id_query";
+                respuesta = { "header": { "query_id": id_query }, "ads": data };
+                res.send('JSON: ' + respuesta);
                             });
         }).on("error", (err) => {
             console.log("Error: " + err.message);
