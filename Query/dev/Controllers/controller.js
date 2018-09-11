@@ -271,8 +271,8 @@ exports.findQuery = function (req, res) {
                         message: "Ads error"
                     })
                     return;
-                }               
-                respuesta = '{ "header": { "query_id": ' + query_id + '},'+ '"ads":' + data.results + "}";
+                }
+                respuesta = '{ "header": { "query_id": ' + query_id + '},' + '"ads":' + myjson.results + "}";
                 res.send('JSON: ' + JSON.stringify(respuesta));
                 });
         }).on("error", (err) => {
