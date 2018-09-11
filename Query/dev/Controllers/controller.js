@@ -136,7 +136,7 @@ exports.findQuery = function (req, res) {
             resp.on('end', () => {
                 console.log('Targeting: http://18.212.105.67:3003/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code)
                 console.log("Response: " + data);
-                res.send('JSON: ' + data);
+                //res.send('JSON: ' + data);
 
                 var myjson = JSON.parse(data);
                 //console.log("JSON: " + (myjson.results)[0].id);     
@@ -162,8 +162,6 @@ exports.findQuery = function (req, res) {
         let ranked_advertiser_campaigns_bids = '';
         http.get('http://18.212.105.67:3004/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids + maximum_text, (resp) => {
             let data = '';
-            let listOfTAC = targeted_advertiser_campaigns.split(',');
-            let listOfACB = advertiser_campaigns_bids.split(',');
             // A chunk of data has been received
             resp.on('data', (chunk) => {
                 data += chunk;
@@ -179,7 +177,7 @@ exports.findQuery = function (req, res) {
                     ranked_advertiser_campaigns += r_a_c;
                     //console.log("Agregar: " + a_c);
                     if (i != l - 1) {
-                        targeted_advertiser_campaigns += ",";
+                        ranked_advertiser_campaigns += ",";
                     }
                 }
                 console.log('Ranking: http://18.212.105.67:3004/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids);
@@ -204,13 +202,13 @@ exports.findQuery = function (req, res) {
                 console.log('Ads: http://18.212.105.67:3005/?advertiser_campaigns=' + ranked_advertiser_campaigns);
                 console.log("Response: " + data);
                 res.send('JSON: ' + data);
-            });
+                            });
         }).on("error", (err) => {
             console.log("Error: " + err.message);
         });
     }
 
-    function Pricing(ranked_advertiser_campaigns,ad) {
+    function Pricing(ranked_advertiser_campaigns,advertiser_campaign_bids,publisher_campaigns) {
         http.get('http://18.212.105.67:3006/?advertiser_campaigns=' + ranked_advertiser_campaigns, (resp) => {
             let data = '';
             // A chunk of data has been received
