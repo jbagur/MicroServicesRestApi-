@@ -207,6 +207,8 @@ exports.findQuery = function (req, res) {
             resp.on('end', () => {
                 console.log('Ranking: http://18.212.105.67:3004/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids);
                 console.log("Response: " + data);
+                
+                var myjson = JSON.parse(data);
                 if (typeof myjson == "undefined") {
                     console.log("Ranking error");
                     res.status(400).json({
@@ -223,7 +225,6 @@ exports.findQuery = function (req, res) {
                     })
                     return;
                 }
-                var myjson = JSON.parse(data);
                 //console.log("JSON: " + (myjson.results)[0].id);     
                 var l = parseInt(Object.keys(myjson.results).length);
                 //console.log("JSON lenght: " + l);
