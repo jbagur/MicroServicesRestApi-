@@ -255,15 +255,23 @@ exports.findQuery = function (req, res) {
             // The whole response has been received
             resp.on('end', () => {
                 console.log('Ads: http://18.212.105.67:3005/?advertiser_campaigns=' + ranked_advertiser_campaigns);
-                console.log("Response: " + data);
-                if (typeof data.results == "undefined") {
+                var myjson = JSON.parse(data);
+                if (typeof myjson == "undefined") {
                     console.log("Ads error");
                     res.status(400).json({
                         status: 400,
                         message: "Ads error"
                     })
                     return;
-                }                
+                }
+                if (typeof myjson.results == "undefined") {
+                    console.log("Ads error");
+                    res.status(400).json({
+                        status: 400,
+                        message: "Ads error"
+                    })
+                    return;
+                }               
                 respuesta = '{ "header": { "query_id": ' + query_id + '},'+ '"ads":' + data.results + "}";
                 res.send('JSON: ' + JSON.stringify(respuesta));
                 });
