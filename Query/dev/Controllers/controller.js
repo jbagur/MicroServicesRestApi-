@@ -14,13 +14,7 @@ exports.findQuery = function (req, res) {
     //console.log(req.query.maximum);
     var query_id = "";
     //console.log("Category: "+category+" Publisher_campaign: " +publisher_campaign+" Zip code: " +zip_code+"Maximum: "+maximum);
-    con.query('INSERT INTO queries SET ?', { category: category, publisher_campaign: publisher_campaign, zip_code: zip_code, maximum: maximum }, function (error, results, fields) {
-        if (error) {
-            console.log('Query error. ' + error.message);
-        }
-        query_id = results.insertId;
-        console.log("query_id: " + query_id);
-    });
+    
     
     if (category==null) {
         console.log("No Category");
@@ -56,6 +50,14 @@ exports.findQuery = function (req, res) {
         maximum_text += maximum;
     }
 
+    con.query('INSERT INTO queries SET ?', { category: category, publisher_campaign: publisher_campaign, zip_code: zip_code, maximum: maximum }, function (error, results, fields) {
+        if (error) {
+            console.log('Query error. ' + error.message);
+        }
+        query_id = results.insertId;
+        console.log("query_id: " + query_id);
+    });
+
     function Match(category) {
         var advertiser_campaigns = '';
         var advertiser_campaigns_bids = '';
@@ -66,7 +68,7 @@ exports.findQuery = function (req, res) {
                 data += chunk;
             });
             // The whole response has been received
-            resp.on('end', () => {                
+            resp.on('end', () => {
                 var myjson = JSON.parse(data);
                 //console.log("JSON: " + (myjson.results)[0].id);     
                 var l = parseInt(Object.keys(myjson.results).length);
@@ -82,9 +84,8 @@ exports.findQuery = function (req, res) {
                         advertiser_campaigns += ",";
                         advertiser_campaigns_bids += ",";
                     }
-                }
-                console.log("Matching: http://18.212.105.67:3001/?category=" + category);
-                console.log("Response: " + data);
+                }             
+                
                 //console.log("Lista: " + list);
                 //res.send('JSON: ' + data);
                 Exclusion(advertiser_campaigns, publisher_campaign, advertiser_campaigns_bids);
@@ -105,6 +106,8 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
+                console.log("Exclusions: http://18.212.105.67:3002/?advertiser_campaigns=" + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign);
+                console.log("Response: " + data);
                 var myjson = JSON.parse(data);
                 //console.log("JSON: " + (myjson.results)[0].id);
                 exclusive_advertiser_campaigns = myjson.results;
@@ -121,8 +124,7 @@ exports.findQuery = function (req, res) {
                         exclusive_advertiser_campaigns += ",";
                     }
                 }
-                console.log("Exclusions: http://18.212.105.67:3002/?advertiser_campaigns=" + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign);
-                console.log("Response: " + data);
+                
                 //res.send('JSON: ' + data);
                 Targeting(advertiser_campaigns, zip_code, advertiser_campaigns_bids, exclusive_advertiser_campaigns,exclusion_list);
             });
@@ -175,6 +177,8 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
+                console.log('Ranking: http://18.212.105.67:3004/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids);
+                console.log("Response: " + data);
                 var myjson = JSON.parse(data);
                 //console.log("JSON: " + (myjson.results)[0].id);     
                 var l = parseInt(Object.keys(myjson.results).length);
@@ -187,8 +191,7 @@ exports.findQuery = function (req, res) {
                         ranked_advertiser_campaigns += ",";
                     }
                 }
-                console.log('Ranking: http://18.212.105.67:3004/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids);
-                console.log("Response: " + data);
+                
                 //res.send('JSON: ' + data);
                 Ads(ranked_advertiser_campaigns);
             });
