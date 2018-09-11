@@ -173,7 +173,7 @@ exports.findQuery = function (req, res) {
                 var l = parseInt(Object.keys(myjson.results).length);
                 //console.log("JSON lenght: " + l);
                 for (i = 0; i < l; i++) {
-                    var r_a_c = (myjson.results)[i].id;
+                    var r_a_c = (myjson.results)[i];
                     ranked_advertiser_campaigns += r_a_c;
                     //console.log("Agregar: " + a_c);
                     if (i != l - 1) {
