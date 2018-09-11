@@ -134,7 +134,6 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
-                console.log("Listado de advertisers: " + targeted_advertiser_campaigns);
                 console.log('Targeting: http://18.212.105.67:3003/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code)
                 console.log("Response: " + data);
                 res.send('JSON: ' + data);
@@ -144,11 +143,11 @@ exports.findQuery = function (req, res) {
                 var l = parseInt(Object.keys(myjson.results).length);
                 //console.log("JSON lenght: " + l);
                 for (i = 0; i < l; i++) {
-                    var e_a_c = (myjson.results)[i].id;
-                    exclusive_advertiser_campaigns += e_a_c;
+                    var t_a_c = (myjson.results)[i].id;
+                    targeted_advertiser_campaigns += e_a_c;
                     //console.log("Agregar: " + a_c);
                     if (i != l - 1) {
-                        exclusive_advertiser_campaigns += ",";
+                        targeted_advertiser_campaigns += ",";
                     }                 
                 }                
                 Ranking(targeted_advertiser_campaigns, advertiser_campaigns_bids, maximum);
