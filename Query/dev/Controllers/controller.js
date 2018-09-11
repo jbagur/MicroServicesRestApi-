@@ -6,7 +6,7 @@ var http = require('http');
 exports.findQuery = function (req, res) {
     let category = 1//req.query.category;
     //console.log(req.query.category);
-    let publisher_campaign = 72//req.query.publisher_campaign;
+    let publisher_campaign = 79//req.query.publisher_campaign;
     //console.log(req.query.publisher_campaign);
     let zip_code = 1//req.query.zip_code;
     //console.log(req.query.zip_code);
