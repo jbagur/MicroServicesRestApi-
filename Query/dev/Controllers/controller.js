@@ -116,7 +116,9 @@ exports.findQuery = function (req, res) {
             resp.on('end', () => {
                 console.log("Exclusions: http://18.212.105.67:3002/?advertiser_campaigns=" + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign);
                 console.log("Response: " + data);
+                
                 var myjson = JSON.parse(data);
+                console.log("myjson.results: " + myjson.results);
                 if (typeof myjson.results == "undefined") {
                     console.log("Exclusion error");
                     res.status(400).json({
