@@ -89,7 +89,7 @@ exports.findQuery = function (req, res) {
     }
 
     function Exclusion(advertiser_campaigns, publisher_campaign, advertiser_campaigns_bids) {
-        let exclusive_advertiser_campaigns = '';
+        var exclusive_advertiser_campaigns;
         http.get('http://18.212.105.67:3002/?advertiser_campaigns=' + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign, (resp) => {
             let data = '';
             // A chunk of data has been received
@@ -99,7 +99,8 @@ exports.findQuery = function (req, res) {
             // The whole response has been received
             resp.on('end', () => {
                 var myjson = JSON.parse(data);
-                //console.log("JSON: " + (myjson.results)[0].id);     
+                //console.log("JSON: " + (myjson.results)[0].id);
+                exclusive_advertiser_campaigns = myjson.results;
                 var l = parseInt(Object.keys(myjson.results).length);
                 //console.log("JSON lenght: " + l);
                 for (i = 0; i < l; i++) {
@@ -142,26 +143,20 @@ exports.findQuery = function (req, res) {
                 var l = parseInt(Object.keys(myjson.results).length);
                 //console.log("JSON lenght: " + l);
                 for (i = 0; i < l; i++) {
-                    for (j = 0; i < exclusive_advertiser_campaigns_array.length; i++) {
-                        //console.log("index: " + i);
-                        if ((myjson.results)[i].id == exclusive_advertiser_campaigns_array[j]) {
-                            if (i != 0) {
-                                targeted_advertiser_campaigns += ",";
-                            }
-                            var t_a_c = (myjson.results)[i].id;
-                            targeted_advertiser_campaigns += t_a_c;
-                            //console.log("Agregar: " + a_c);                            
-                        }                        
-                    }                    
-                }
-                
-                /*Ranking(targeted_advertiser_campaigns, advertiser_campaigns_bids, maximum);*/
+                    var e_a_c = (myjson.results)[i].id;
+                    exclusive_advertiser_campaigns += e_a_c;
+                    //console.log("Agregar: " + a_c);
+                    if (i != l - 1) {
+                        exclusive_advertiser_campaigns += ",";
+                    }                 
+                }                
+                Ranking(targeted_advertiser_campaigns, advertiser_campaigns_bids, maximum);
             });
         }).on("error", (err) => {
             console.log("Error: " + err.message);
         });
     }
-    /*
+    
     function Ranking(targeted_advertiser_campaigns, advertiser_campaigns_bids, maximum) {
         let ranked_advertiser_campaigns = '';
         let ranked_advertiser_campaigns_bids = '';
