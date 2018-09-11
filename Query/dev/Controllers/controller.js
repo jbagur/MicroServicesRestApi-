@@ -203,7 +203,7 @@ exports.findQuery = function (req, res) {
                 console.log("Response: " + data);
                 id_query = "id_query";
                 respuesta = { "header": { "query_id": id_query }, "ads": data };
-                res.send('JSON: ' + JSON.stringify(respuesta););
+                res.send('JSON: ' + JSON.stringify(respuesta));
                             });
         }).on("error", (err) => {
             console.log("Error: " + err.message);
