@@ -70,6 +70,14 @@ exports.findQuery = function (req, res) {
             // The whole response has been received
             resp.on('end', () => {
                 var myjson = JSON.parse(data);
+                if (typeof myjson == "undefined") {
+                    console.log("Matching error");
+                    res.status(400).json({
+                        status: 400,
+                        message: "Matching error"
+                    })
+                    return;
+                }
                 //console.log("JSON: " + (myjson.results)[0].id);     
                 var l = parseInt(Object.keys(myjson.results).length);
                 //console.log("JSON lenght: " + l);
@@ -109,6 +117,14 @@ exports.findQuery = function (req, res) {
                 console.log("Exclusions: http://18.212.105.67:3002/?advertiser_campaigns=" + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign);
                 console.log("Response: " + data);
                 var myjson = JSON.parse(data);
+                if (typeof myjson == "undefined") {
+                    console.log("Exclusion error");
+                    res.status(400).json({
+                        status: 400,
+                        message: "Exclusion error"
+                    })
+                    return;
+                }
                 //console.log("JSON: " + (myjson.results)[0].id);
                 exclusive_advertiser_campaigns = myjson.results;
                 var l = parseInt(Object.keys(myjson.results).length);
@@ -148,6 +164,14 @@ exports.findQuery = function (req, res) {
                 //res.send('JSON: ' + data);
 
                 var myjson = JSON.parse(data);
+                if (typeof myjson == "undefined") {
+                    console.log("Targeting error");
+                    res.status(400).json({
+                        status: 400,
+                        message: "Targeting error"
+                    })
+                    return;
+                }
                 //console.log("JSON: " + (myjson.results)[0].id);     
                 var l = parseInt(Object.keys(myjson.results).length);
                 //console.log("JSON lenght: " + l);
@@ -179,6 +203,14 @@ exports.findQuery = function (req, res) {
             resp.on('end', () => {
                 console.log('Ranking: http://18.212.105.67:3004/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids);
                 console.log("Response: " + data);
+                if (typeof myjson == "undefined") {
+                    console.log("Ranking error");
+                    res.status(400).json({
+                        status: 400,
+                        message: "Ranking error"
+                    })
+                    return;
+                }
                 var myjson = JSON.parse(data);
                 //console.log("JSON: " + (myjson.results)[0].id);     
                 var l = parseInt(Object.keys(myjson.results).length);
@@ -210,6 +242,14 @@ exports.findQuery = function (req, res) {
             // The whole response has been received
             resp.on('end', () => {
                 console.log('Ads: http://18.212.105.67:3005/?advertiser_campaigns=' + ranked_advertiser_campaigns);
+                if (typeof data.results == "undefined") {
+                    console.log("Ads error");
+                    res.status(400).json({
+                        status: 400,
+                        message: "Ads error"
+                    })
+                    return;
+                }
                 console.log("Response: " + data);
                 respuesta = '{ "header": { "query_id": ' + query_id + '},'+ '"ads":' + data.results + "}";
                 res.send('JSON: ' + JSON.stringify(respuesta));
