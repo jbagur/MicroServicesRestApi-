@@ -5,13 +5,13 @@ var Promise = require('promise');
 
 
 exports.findQuery = function (req, res) {
-    let category = 1;//req.query.category;
+    let category = req.query.category;
     //console.log(req.query.category);
-    let publisher_campaign = 72;//req.query.publisher_campaign;
+    let publisher_campaign = req.query.publisher_campaign;
     //console.log(req.query.publisher_campaign);
-    let zip_code = 1;// req.query.zip_code;
+    let zip_code = req.query.zip_code;
     //console.log(req.query.zip_code);
-    let maximum = 20;//req.query.maximum;
+    let maximum = req.query.maximum;
     //console.log(req.query.maximum);
     var query_id = "";
     //console.log("Category: "+category+" Publisher_campaign: " +publisher_campaign+" Zip code: " +zip_code+"Maximum: "+maximum);
@@ -212,7 +212,7 @@ exports.findQuery = function (req, res) {
                 id_query = "id_query";
                 respuesta = { "header": { "query_id": query_id }, "ads": data };
                 res.send('JSON: ' + JSON.stringify(respuesta));
-                            });
+                });
         }).on("error", (err) => {
             console.log("Error: " + err.message);
         });
