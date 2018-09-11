@@ -69,6 +69,8 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
+                console.log("Exclusions: http://18.212.105.67:3001/?category=" + category);
+                console.log("Response: " + data);
                 var myjson = JSON.parse(data);
                 if (typeof myjson == "undefined") {
                     console.log("Matching error");
