@@ -175,18 +175,12 @@ exports.findQuery = function (req, res) {
                 var l = parseInt(Object.keys(myjson.results).length);
                 //console.log("JSON lenght: " + l);
                 for (i = 0; i < l; i++) {
-                    for (j = 0; j < listOfTAC.length; i++)
-                        var r_a_c = (myjson.results)[i].id;
-                        if (r_a_c == listOfTAC[i]) {
-                            //console.log("index: " + i);                            
-                            ranked_advertiser_campaigns += r_a_c;
-                            ranked_advertiser_campaigns_bids += listOfACB[j];
-                            //console.log("Agregar: " + a_c);
-                            if (i != l - 1) {
-                                ranked_advertiser_campaigns += ",";
-                                ranked_advertiser_campaigns_bids += ",";
-                            }
-                        }                        
+                    var r_a_c = (myjson.results)[i].id;
+                    ranked_advertiser_campaigns += r_a_c;
+                    //console.log("Agregar: " + a_c);
+                    if (i != l - 1) {
+                        targeted_advertiser_campaigns += ",";
+                    }
                 }
                 console.log('Ranking: http://18.212.105.67:3004/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids);
                 console.log("Response: " + data);
