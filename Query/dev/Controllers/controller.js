@@ -117,7 +117,7 @@ exports.findQuery = function (req, res) {
                 console.log("Exclusions: http://18.212.105.67:3002/?advertiser_campaigns=" + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign);
                 console.log("Response: " + data);
                 var myjson = JSON.parse(data);
-                if (typeof myjson == "undefined") {
+                if (typeof myjson.results == "undefined") {
                     console.log("Exclusion error");
                     res.status(400).json({
                         status: 400,
@@ -164,7 +164,7 @@ exports.findQuery = function (req, res) {
                 //res.send('JSON: ' + data);
 
                 var myjson = JSON.parse(data);
-                if (typeof myjson == "undefined") {
+                if (typeof myjson.results == "undefined") {
                     console.log("Targeting error");
                     res.status(400).json({
                         status: 400,
@@ -203,7 +203,7 @@ exports.findQuery = function (req, res) {
             resp.on('end', () => {
                 console.log('Ranking: http://18.212.105.67:3004/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids);
                 console.log("Response: " + data);
-                if (typeof myjson == "undefined") {
+                if (typeof myjson.results == "undefined") {
                     console.log("Ranking error");
                     res.status(400).json({
                         status: 400,
