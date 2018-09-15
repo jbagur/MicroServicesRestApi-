@@ -186,7 +186,7 @@ exports.findQuery = function (req, res) {
                         targeted_advertiser_campaigns += ",";
                     }
                     for (j = 0; j < exclusion_list.length; j++) {
-                        if (t_a_c == exclusion_list[0]) {
+                        if (t_a_c == exclusion_list[j]) {
                             console.log("Agregar: " + t_a_c);
                             list_for_ranking.push(t_a_c);
                         }
