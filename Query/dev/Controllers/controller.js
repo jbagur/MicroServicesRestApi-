@@ -1,5 +1,5 @@
 var express = require('express');
-var con = require('../Models/model.js');
+var conn = require('../Models/model.js');
 var http = require('http');
 
 
@@ -50,7 +50,7 @@ exports.findQuery = function (req, res) {
         maximum_text += maximum;
     }
 
-    con.query('INSERT INTO queries SET ?', { category: category, publisher_campaign: publisher_campaign, zip_code: zip_code, maximum: maximum }, function (error, results, fields) {
+    conn.query('INSERT INTO queries SET ?', { category: category, publisher_campaign: publisher_campaign, zip_code: zip_code, maximum: maximum }, function (error, results, fields) {
         if (error) {
             console.log('Query error. ' + error.message);
         }
