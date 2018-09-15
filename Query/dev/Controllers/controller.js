@@ -1,5 +1,5 @@
 var express = require('express');
-var conn = require('../Models/model.js');
+var con = require('../Models/model.js');
 var http = require('http');
 
 
@@ -13,7 +13,7 @@ exports.findQuery = function (req, res) {
     let maximum = req.query.maximum;
     //console.log(req.query.maximum);
     var query_id = "";
-    console.log("Category: "+category+" Publisher_campaign: " +publisher_campaign+" Zip code: " +zip_code+"Maximum: "+maximum);
+    console.log("Category: "+category+" Publisher_campaign: " +publisher_campaign+" Zip code: " +zip_code+" Maximum: "+maximum);
     
     
     if (category==null) {
@@ -29,7 +29,7 @@ exports.findQuery = function (req, res) {
         console.log("No Publisher");
         res.status(400).json({
             status: 400,
-            message: "No campaign"
+            message: "No publisher"
         })
         return;
     }
@@ -50,7 +50,7 @@ exports.findQuery = function (req, res) {
         maximum_text += maximum;
     }
 
-    conn.query('INSERT INTO queries SET ?', { category: category, publisher_campaign: publisher_campaign, zip_code: zip_code, maximum: maximum }, function (error, results, fields) {
+    con.query('INSERT INTO queries SET ?', { category: category, publisher_campaign: publisher_campaign, zip_code: zip_code, maximum: maximum }, function (error, results, fields) {
         if (error) {
             console.log('Query error. ' + error.message);
         }
@@ -144,7 +144,7 @@ exports.findQuery = function (req, res) {
                         exclusive_advertiser_campaigns += ",";
                     }
                 }
-                
+                console.log("exclusive_advertiser_campaigns: " + exclusive_advertiser_campaigns);
                 //res.send('JSON: ' + data);
                 Targeting(advertiser_campaigns, zip_code, advertiser_campaigns_bids, exclusive_advertiser_campaigns,exclusion_list);
             });
