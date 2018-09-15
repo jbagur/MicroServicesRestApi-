@@ -13,7 +13,7 @@ exports.findQuery = function (req, res) {
     let maximum = req.query.maximum;
     //console.log(req.query.maximum);
     var query_id = "";
-    //console.log("Category: "+category+" Publisher_campaign: " +publisher_campaign+" Zip code: " +zip_code+"Maximum: "+maximum);
+    console.log("Category: "+category+" Publisher_campaign: " +publisher_campaign+" Zip code: " +zip_code+"Maximum: "+maximum);
     
     
     if (category==null) {
