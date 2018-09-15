@@ -176,15 +176,23 @@ exports.findQuery = function (req, res) {
                 var l = parseInt(Object.keys(myjson.results).length);
                 //console.log("JSON lenght: " + l);
                 var targeted_list = [];
+                var list_for_ranking = [];
                 for (i = 0; i < l; i++) {
                     var t_a_c = (myjson.results)[i].id;
                     targeted_advertiser_campaigns += t_a_c;
                     targeted_list.push(t_a_c);
-                    console.log("Agregar: " + t_a_c);
+                    //console.log("Agregar: " + t_a_c);
                     if (i != l - 1) {
                         targeted_advertiser_campaigns += ",";
                     }
-                }                
+                    for (j = 0; j < exclusion_list.length; j++) {
+                        if (t_a_c == exclusion_list[0]) {
+                            console.log("Agregar: " + t_a_c);
+                            list_for_ranking.push(t_a_c);
+                        }
+                    }
+                }
+
                 Ranking(targeted_advertiser_campaigns, advertiser_campaigns_bids, maximum);
             });
         }).on("error", (err) => {
