@@ -176,7 +176,7 @@ exports.findQuery = function (req, res) {
                 var l = parseInt(Object.keys(myjson.results).length);
                 //console.log("JSON lenght: " + l);
                 var targeted_list = [];
-                var list_for_ranking = [];
+                var list_for_ranking_A = [];
                 for (i = 0; i < l; i++) {
                     var t_a_c = (myjson.results)[i].id;
                     targeted_advertiser_campaigns += t_a_c;
@@ -188,11 +188,20 @@ exports.findQuery = function (req, res) {
                     for (j = 0; j < exclusion_list.length; j++) {
                         if (t_a_c == exclusion_list[j]) {
                             console.log("Agregar: " + t_a_c);
-                            list_for_ranking.push(t_a_c);
+                            list_for_ranking_A.push(t_a_c);
                         }
                     }
                 }
-
+                var list_for_ranking_B = [];
+                var advertiser_campaigns_list = advertiser_campaigns.split(",");
+                var advertiser_Campaigns_bids_list = advertiser_campaigns_bids.split(",");
+                for (i = 0; i < advertiser_campaigns_list.length; i++) {
+                    for (j = 0, j < list_for_ranking_A.length; j++) {
+                        if (advertiser_campaigns_list[0] == list_for_ranking_A[j]) {
+                            list_for_ranking_B.push(advertiser_Campaigns_bids_list[i]);
+                        }
+                    }
+                }
                 Ranking(targeted_advertiser_campaigns, advertiser_campaigns_bids, maximum);
             });
         }).on("error", (err) => {
