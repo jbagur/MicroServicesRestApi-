@@ -131,20 +131,16 @@ exports.findQuery = function (req, res) {
                 }
                 //console.log("JSON: " + (myjson.results)[0].id);
                 exclusive_advertiser_campaigns = myjson.results;
+                console.log("exclusive_advertiser_campaigns: " + exclusive_advertiser_campaigns);
                 var l = parseInt(Object.keys(myjson.results).length);
                 //console.log("JSON lenght: " + l);
                 for (i = 0; i < l; i++) {
                     //console.log("index: " + i);
-                    var e_a_c = (myjson.results)[i].id;
+                    var e_a_c = exclusive_advertiser_campaigns[i];
+                    console.log("Agregar: "+e_a_c);
                     var exclusion_list = [];
-                    exclusive_advertiser_campaigns += e_a_c;
                     exclusion_list.push(e_a_c)
-                    //console.log("Agregar: " + a_c);
-                    if (i != l - 1) {
-                        exclusive_advertiser_campaigns += ",";
-                    }
                 }
-                console.log("exclusive_advertiser_campaigns: " + exclusive_advertiser_campaigns);
                 //res.send('JSON: ' + data);
                 Targeting(advertiser_campaigns, zip_code, advertiser_campaigns_bids, exclusive_advertiser_campaigns,exclusion_list);
             });
