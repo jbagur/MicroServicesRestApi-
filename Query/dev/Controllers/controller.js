@@ -196,7 +196,7 @@ exports.findQuery = function (req, res) {
                 var advertiser_campaigns_list = advertiser_campaigns.split(",");
                 var advertiser_Campaigns_bids_list = advertiser_campaigns_bids.split(",");
                 for (i = 0; i < advertiser_campaigns_list.length; i++) {
-                    for (j = 0, j < list_for_ranking_A.length; j++) {
+                    for (j = 0; j < list_for_ranking_A.length; j++) {
                         if (advertiser_campaigns_list[0] == list_for_ranking_A[j]) {
                             list_for_ranking_B.push(advertiser_Campaigns_bids_list[i]);
                         }
