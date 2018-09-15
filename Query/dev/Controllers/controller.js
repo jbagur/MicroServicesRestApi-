@@ -202,7 +202,9 @@ exports.findQuery = function (req, res) {
                         }
                     }
                 }
-                Ranking(targeted_advertiser_campaigns, advertiser_campaigns_bids, maximum);
+                var ranking_A = list_for_ranking_A.toString();
+                var ranking_B = list_for_ranking_B.toString();
+                Ranking(ranking_A, ranking_B, maximum);
             });
         }).on("error", (err) => {
             console.log("Error: " + err.message);
