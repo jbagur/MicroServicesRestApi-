@@ -134,22 +134,22 @@ exports.findQuery = function (req, res) {
                 console.log("exclusive_advertiser_campaigns: " + exclusive_advertiser_campaigns);
                 var l = parseInt(Object.keys(myjson.results).length);
                 //console.log("JSON lenght: " + l);
+                var exclusion_list = [];
                 for (i = 0; i < l; i++) {
                     //console.log("index: " + i);
                     var e_a_c = exclusive_advertiser_campaigns[i];
-                    console.log("Agregar: "+e_a_c);
-                    var exclusion_list = [];
-                    exclusion_list.push(e_a_c)
+                    //console.log("Agregar: "+e_a_c);                    
+                    exclusion_list.push(e_a_c);
                 }
                 //res.send('JSON: ' + data);
-                Targeting(advertiser_campaigns, zip_code, advertiser_campaigns_bids, exclusive_advertiser_campaigns,exclusion_list);
+                Targeting(advertiser_campaigns, zip_code, advertiser_campaigns_bids,exclusion_list);
             });
         }).on("error", (err) => {
             console.log("Error: " + err.message);
         });
     }
          
-    function Targeting(advertiser_campaigns, zip_code, advertiser_campaigns_bids, exclusive_advertiser_campaigns,exclusion_list) {
+    function Targeting(advertiser_campaigns, zip_code, advertiser_campaigns_bids,exclusion_list) {
         let targeted_advertiser_campaigns = '';
         http.get('http://18.212.105.67:3003/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code, (resp) => {
             let data = '';
@@ -175,13 +175,15 @@ exports.findQuery = function (req, res) {
                 //console.log("JSON: " + (myjson.results)[0].id);     
                 var l = parseInt(Object.keys(myjson.results).length);
                 //console.log("JSON lenght: " + l);
+                var targeted_list = [];
                 for (i = 0; i < l; i++) {
                     var t_a_c = (myjson.results)[i].id;
                     targeted_advertiser_campaigns += t_a_c;
-                    //console.log("Agregar: " + a_c);
+                    targeted_list.push(e_a_c);
+                    console.log("Agregar: " + a_c);
                     if (i != l - 1) {
                         targeted_advertiser_campaigns += ",";
-                    }                 
+                    }
                 }                
                 Ranking(targeted_advertiser_campaigns, advertiser_campaigns_bids, maximum);
             });
