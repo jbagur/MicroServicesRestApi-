@@ -26,7 +26,7 @@ exports.findQuery = function (req, res) {
     }
     
     if (publisher_campaign==null) {
-        console.log("No Campaign");
+        console.log("No Publisher");
         res.status(400).json({
             status: 400,
             message: "No campaign"
