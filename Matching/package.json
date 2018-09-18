@@ -4,7 +4,7 @@
   "description": "Microservicio de Matching",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./dev/server.js"
+    "dev": "node ./dev/server.js"
   },
   "keywords": [
     "Microservicio"
