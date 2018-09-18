@@ -1,10 +1,10 @@
 {
-  "name": "targeting",
+  "name": "matching",
   "version": "0.0.1",
-  "description": "Microservicio de Targeting",
+  "description": "Microservicio de Matching",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon ./dev/server.js"
+    "dev": "node ./dev/server.js"
   },
   "keywords": [
     "Microservicio"
