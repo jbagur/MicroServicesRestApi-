@@ -61,7 +61,7 @@ exports.findQuery = function (req, res) {
     function Match(category) {
         var advertiser_campaigns = '';
         var advertiser_campaigns_bids = '';
-        http.get('http://18.212.105.67:3001/?category=' + category, (resp) => {
+        http.get('http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/match/?category=' + category, (resp) => {
             let data = '';
             // A chunk of data has been received
             resp.on('data', (chunk) => {
@@ -69,7 +69,7 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
-                console.log("Matching: http://18.212.105.67:3001/?category=" + category);
+                console.log("Matching: http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/match/?category=" + category);
                 console.log("Response: " + data);
                 var myjson = JSON.parse(data);
                 if (typeof myjson == "undefined") {
@@ -108,7 +108,7 @@ exports.findQuery = function (req, res) {
 
     function Exclusion(advertiser_campaigns, publisher_campaign, advertiser_campaigns_bids) {
         var exclusive_advertiser_campaigns;
-        http.get('http://18.212.105.67:3002/?advertiser_campaigns=' + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign, (resp) => {
+        http.get('http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/exclusions/?advertiser_campaigns=' + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign, (resp) => {
             let data = '';
             // A chunk of data has been received
             resp.on('data', (chunk) => {
@@ -116,7 +116,7 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
-                console.log("Exclusions: http://18.212.105.67:3002/?advertiser_campaigns=" + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign);
+                console.log("Exclusions: http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/exclusions/?advertiser_campaigns=" + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign);
                 console.log("Response: " + data);
                 
                 var myjson = JSON.parse(data);
@@ -151,7 +151,7 @@ exports.findQuery = function (req, res) {
          
     function Targeting(advertiser_campaigns, zip_code, advertiser_campaigns_bids,exclusion_list) {
         let targeted_advertiser_campaigns = '';
-        http.get('http://18.212.105.67:3003/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code, (resp) => {
+        http.get('http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/targeting/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code, (resp) => {
             let data = '';
             // A chunk of data has been received
             resp.on('data', (chunk) => {
@@ -159,7 +159,7 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
-                console.log('Targeting: http://18.212.105.67:3003/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code)
+                console.log('Targeting: http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/targeting/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code)
                 console.log("Response: " + data);
                 //res.send('JSON: ' + data);
 
@@ -215,7 +215,7 @@ exports.findQuery = function (req, res) {
     function Ranking(targeted_advertiser_campaigns, advertiser_campaigns_bids, maximum) {
         let ranked_advertiser_campaigns = '';
         let ranked_advertiser_campaigns_bids = '';
-        http.get('http://18.212.105.67:3004/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids + maximum_text, (resp) => {
+        http.get('http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/ranking/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids + maximum_text, (resp) => {
             let data = '';
             // A chunk of data has been received
             resp.on('data', (chunk) => {
@@ -223,7 +223,7 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
-                console.log('Ranking: http://18.212.105.67:3004/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids);
+                console.log('Ranking: http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/ranking/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids);
                 console.log("Response: " + data);
                 
                 var myjson = JSON.parse(data);
@@ -264,7 +264,7 @@ exports.findQuery = function (req, res) {
     }
 
     function Ads(ranked_advertiser_campaigns) {
-        http.get('http://18.212.105.67:3005/?advertiser_campaigns=' + ranked_advertiser_campaigns, (resp) => {
+        http.get('http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/ads/?advertiser_campaigns=' + ranked_advertiser_campaigns, (resp) => {
             let data = '';
             // A chunk of data has been received
             resp.on('data', (chunk) => {
@@ -272,7 +272,7 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
-                console.log('Ads: http://18.212.105.67:3005/?advertiser_campaigns=' + ranked_advertiser_campaigns);
+                console.log('Ads: http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/ads/?advertiser_campaigns=' + ranked_advertiser_campaigns);
                 console.log("Response: " + data);
                 var myjson = JSON.parse(data);
                 if (typeof myjson == "undefined") {
@@ -300,7 +300,7 @@ exports.findQuery = function (req, res) {
     }
 
     function Pricing(ranked_advertiser_campaigns,advertiser_campaign_bids,publisher_campaigns) {
-        http.get('http://18.212.105.67:3006/?advertiser_campaigns=' + ranked_advertiser_campaigns, (resp) => {
+        http.get('http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/pricing/?advertiser_campaigns=' + ranked_advertiser_campaigns, (resp) => {
             let data = '';
             // A chunk of data has been received
             resp.on('data', (chunk) => {
