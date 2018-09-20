@@ -108,7 +108,7 @@ exports.findQuery = function (req, res) {
 
     function Exclusion(advertiser_campaigns, publisher_campaign, advertiser_campaigns_bids) {
         var exclusive_advertiser_campaigns;
-        http.get('http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/exclusion/?advertiser_campaigns=' + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign, (resp) => {
+        http.get('http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/exclusions/?advertiser_campaigns=' + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign, (resp) => {
             let data = '';
             // A chunk of data has been received
             resp.on('data', (chunk) => {
@@ -116,7 +116,7 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
-                console.log("Exclusions: http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/exclusion/?advertiser_campaigns=" + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign);
+                console.log("Exclusions: http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/exclusions/?advertiser_campaigns=" + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign);
                 console.log("Response: " + data);
                 
                 var myjson = JSON.parse(data);
