@@ -61,7 +61,7 @@ exports.findQuery = function (req, res) {
     function Match(category) {
         var advertiser_campaigns = '';
         var advertiser_campaigns_bids = '';
-        http.get('http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/match/?category=' + category, (resp) => {
+        http.get('http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/matching/?category=' + category, (resp) => {
             let data = '';
             // A chunk of data has been received
             resp.on('data', (chunk) => {
@@ -69,7 +69,7 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
-                console.log("Matching: http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/match/?category=" + category);
+                console.log("Matching: http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/matching/?category=" + category);
                 console.log("Response: " + data);
                 var myjson = JSON.parse(data);
                 if (typeof myjson == "undefined") {
@@ -308,7 +308,7 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
-                console.log('Pricing: http://18.212.105.67:3006/?advertiser_campaigns=' + ranked_advertiser_campaigns);
+                console.log('Pricing: http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/pricing/?advertiser_campaigns=' + ranked_advertiser_campaigns);
                 console.log("Response: " + data);
                 res.send('JSON: ' + data);
             });
