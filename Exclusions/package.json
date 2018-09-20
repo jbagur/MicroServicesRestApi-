@@ -1,7 +1,7 @@
 {
   "name": "matching",
   "version": "0.0.1",
-  "description": "Microservicio de Matching",
+  "description": "Microservicio de Exclusions",
   "main": "index.js",
   "scripts": {
     "dev": "node ./dev/server.js"
