@@ -59,9 +59,10 @@ exports.findQuery = function (req, res) {
     });
 
     function Match(category) {
+        console.log("Entró a matching");
         var advertiser_campaigns = '';
         var advertiser_campaigns_bids = '';
-        http.get('http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/matching/?category=' + category, (resp) => {
+        http.get('http://internal-PrivateLB-109908406.us-east-1.elb.amazonaws.com/matching/?category=' + category, (resp) => {
             let data = '';
             // A chunk of data has been received
             resp.on('data', (chunk) => {
@@ -69,7 +70,7 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
-                console.log("Matching: http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/matching/?category=" + category);
+                console.log("Matching: http://internal-PrivateLB-109908406.us-east-1.elb.amazonaws.com/matching/?category=" + category);
                 console.log("Response: " + data);
                 var myjson = JSON.parse(data);
                 if (typeof myjson == "undefined") {
@@ -107,8 +108,9 @@ exports.findQuery = function (req, res) {
     }
 
     function Exclusion(advertiser_campaigns, publisher_campaign, advertiser_campaigns_bids) {
+        console.log("Entró a exclusion");
         var exclusive_advertiser_campaigns;
-        http.get('http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/exclusions/?advertiser_campaigns=' + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign, (resp) => {
+        http.get('http://internal-PrivateLB-109908406.us-east-1.elb.amazonaws.com/?advertiser_campaigns=' + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign, (resp) => {
             let data = '';
             // A chunk of data has been received
             resp.on('data', (chunk) => {
@@ -116,7 +118,7 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
-                console.log("Exclusions: http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/exclusions/?advertiser_campaigns=" + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign);
+                console.log("Exclusions: http://internal-PrivateLB-109908406.us-east-1.elb.amazonaws.com/exclusions/?advertiser_campaigns=" + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign);
                 console.log("Response: " + data);
                 
                 var myjson = JSON.parse(data);
@@ -149,9 +151,10 @@ exports.findQuery = function (req, res) {
         });
     }
          
-    function Targeting(advertiser_campaigns, zip_code, advertiser_campaigns_bids,exclusion_list) {
+    function Targeting(advertiser_campaigns, zip_code, advertiser_campaigns_bids, exclusion_list) {
+        console.log("Entró a targeting");
         let targeted_advertiser_campaigns = '';
-        http.get('http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/targeting/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code, (resp) => {
+        http.get('http://internal-PrivateLB-109908406.us-east-1.elb.amazonaws.com/targeting/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code, (resp) => {
             let data = '';
             // A chunk of data has been received
             resp.on('data', (chunk) => {
@@ -159,7 +162,7 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
-                console.log('Targeting: http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/targeting/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code)
+                console.log('Targeting: http://internal-PrivateLB-109908406.us-east-1.elb.amazonaws.com/targeting/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code)
                 console.log("Response: " + data);
                 //res.send('JSON: ' + data);
 
@@ -213,9 +216,10 @@ exports.findQuery = function (req, res) {
     }
     
     function Ranking(targeted_advertiser_campaigns, advertiser_campaigns_bids, maximum) {
+        console.log("Entró a ranking");
         let ranked_advertiser_campaigns = '';
         let ranked_advertiser_campaigns_bids = '';
-        http.get('http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/ranking/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids + maximum_text, (resp) => {
+        http.get('http://internal-PrivateLB-109908406.us-east-1.elb.amazonaws.com/ranking/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids + maximum_text, (resp) => {
             let data = '';
             // A chunk of data has been received
             resp.on('data', (chunk) => {
@@ -223,7 +227,7 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
-                console.log('Ranking: http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/ranking/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids);
+                console.log('Ranking: http://internal-PrivateLB-109908406.us-east-1.elb.amazonaws.com/ranking/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids);
                 console.log("Response: " + data);
                 
                 var myjson = JSON.parse(data);
@@ -264,7 +268,8 @@ exports.findQuery = function (req, res) {
     }
 
     function Ads(ranked_advertiser_campaigns) {
-        http.get('http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/ads/?advertiser_campaigns=' + ranked_advertiser_campaigns, (resp) => {
+        console.log("Entró a ads");
+        http.get('http://internal-PrivateLB-109908406.us-east-1.elb.amazonaws.com/ads/?advertiser_campaigns=' + ranked_advertiser_campaigns, (resp) => {
             let data = '';
             // A chunk of data has been received
             resp.on('data', (chunk) => {
@@ -272,7 +277,7 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
-                console.log('Ads: http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/ads/?advertiser_campaigns=' + ranked_advertiser_campaigns);
+                console.log('Ads: http://internal-PrivateLB-109908406.us-east-1.elb.amazonaws.com/ads/?advertiser_campaigns=' + ranked_advertiser_campaigns);
                 console.log("Response: " + data);
                 var myjson = JSON.parse(data);
                 if (typeof myjson == "undefined") {
@@ -299,8 +304,9 @@ exports.findQuery = function (req, res) {
         });
     }
 
-    function Pricing(ranked_advertiser_campaigns,advertiser_campaign_bids,publisher_campaigns) {
-        http.get('http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/pricing/?advertiser_campaigns=' + ranked_advertiser_campaigns, (resp) => {
+    function Pricing(ranked_advertiser_campaigns, advertiser_campaign_bids, publisher_campaigns) {
+        console.log("Entró a pricing");
+        http.get('http://internal-PrivateLB-109908406.us-east-1.elb.amazonaws.com/pricing/?advertiser_campaigns=' + ranked_advertiser_campaigns, (resp) => {
             let data = '';
             // A chunk of data has been received
             resp.on('data', (chunk) => {
@@ -308,7 +314,7 @@ exports.findQuery = function (req, res) {
             });
             // The whole response has been received
             resp.on('end', () => {
-                console.log('Pricing: http://internal-privateLoadBalancer-278535949.us-east-1.elb.amazonaws.com/pricing/?advertiser_campaigns=' + ranked_advertiser_campaigns);
+                console.log('Pricing: http://internal-PrivateLB-109908406.us-east-1.elb.amazonaws.com/pricing/?advertiser_campaigns=' + ranked_advertiser_campaigns);
                 console.log("Response: " + data);
                 res.send('JSON: ' + data);
             });
