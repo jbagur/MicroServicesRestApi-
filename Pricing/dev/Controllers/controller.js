@@ -1,19 +1,19 @@
 var express = require('express');
 var con = require('../Models/model.js');
-
+console.log("Iniciando servicio de pricing.");
 
 exports.findPricing= function(req, res){
     
   let advertiser_campaigns = req.query.advertiser_campaigns.split(",");
-  //console.log("Lista de Advertiser Id's");
-  //console.log(advertiser_campaigns);
+  console.log("Lista de Advertiser Id's");
+  console.log(advertiser_campaigns);
     
   let advertiser_campaigns_bids = req.query.advertiser_campaigns_bids.split(",");
-  //console.log("Lista de Bid's");
-  //console.log(advertiser_campaigns_bids);
+  console.log("Lista de Bid's");
+  console.log(advertiser_campaigns_bids);
 
   let publisher_campaign = req.query.publisher_campaign;
-  //console.log(req.query.publisher_campaign);
+  console.log(req.query.publisher_campaign);
 
   let adCamId = [];
   let bidCom = [];
@@ -55,6 +55,7 @@ exports.findPricing= function(req, res){
   }
   con.query('SELECT commission FROM publishers_campaigns WHERE id = ?', publisher_campaign, (err, result, fields) => {
       if (err) {
+          console.log("Hubo un error con el query.");
           console.log("Status 500. Details: " + err);
           res.status(500).json({
               status: 500,
@@ -77,7 +78,7 @@ exports.findPricing= function(req, res){
           for(i=0; i<bidCom.length; i++){
             bidCom[i]*=commVal;
         }
-          //console.log(bidCom);
+          console.log("Bids:"+bidCom);
 
           var obj = {};
           for (var i = 0; i < bidCom.length; i++) {

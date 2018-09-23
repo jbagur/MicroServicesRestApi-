@@ -1,6 +1,6 @@
 var express = require('express');
 var con = require('../Models/model.js');
-
+console.log("Iniciando servicio de targeting");
 
 exports.findTargeting = function(req, res){
   let advertiser_campaigns = req.query.advertiser_campaigns;
@@ -27,6 +27,7 @@ exports.findTargeting = function(req, res){
   }
   con.query('SELECT id FROM advertiser_campaigns WHERE advertiser_campaigns.id IN ('+advertiser_campaigns+') AND (targeting = "" OR targeting LIKE "%'+zip_code+'%")', (err, result, fields) => {
       if (err) {
+          console.log("Hubo un error con el query.");
           console.log("Status 500. Details: " + err);
           res.status(500).json({
               status: 500,

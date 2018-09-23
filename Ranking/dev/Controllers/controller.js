@@ -1,11 +1,12 @@
 var express = require('express');
 var con = require('../Models/model.js');
-
+console.log("Iniciando servicio de ranking.");
 
 exports.getRanking = function(req, res){
   let advertiser_campaigns = req.query.advertiser_campaigns.split(",");
   console.log(advertiser_campaigns);
   let advertiser_campaigns_bids = req.query.advertiser_campaigns_bids.split(",");
+  console.log(advertiser_campaigns_bids)
   let maximum = req.query.maximum;
   let rankings = [];
     
@@ -30,6 +31,7 @@ exports.getRanking = function(req, res){
     
   if (!maximum) {
       maximum = 10;
+      console.log("No se especifico un maximo por lo cual ha sido igualado a 10");
   
   }
     

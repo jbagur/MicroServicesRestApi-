@@ -1,5 +1,6 @@
 var express = require('express');
 var con = require('../Models/model.js');
+console.log("Iniciando el servicio de ads.");
 
 
 exports.findAds = function(req, res){
@@ -18,6 +19,7 @@ exports.findAds = function(req, res){
     
   con.query('SELECT id, headline, description, url FROM ads JOIN campaign_ads ON ads.id = campaign_ads.ad_id WHERE campaign_ads.campaign_id IN ('+advertiser_campaigns+') GROUP BY campaign_ads.campaign_id ORDER BY RAND()', (err, result, fields) => {
       if (err) {
+          console.log("Hubo un error con el query.");
           console.log("Status 500. Details: " + err);
           res.status(500).json({
               status: 500,

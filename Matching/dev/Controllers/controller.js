@@ -1,5 +1,6 @@
 var express = require('express');
 var con = require('../Models/model.js');
+console.log("Iniciando servicio de matching.");
 
 
 exports.findMatch = function (req, res) {
@@ -16,6 +17,7 @@ exports.findMatch = function (req, res) {
     }
     con.query('SELECT id, bid, targeting FROM advertiser_campaigns WHERE status = true AND category = ? ', category, (err, result, fields) => {
         if (err) {
+            console.log("Hubo un error con el query.");
             console.log("Status 500. Details: " + err);
             res.status(500).json({
                 status: 500,
