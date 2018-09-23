@@ -1,18 +1,19 @@
 var express = require('express');
 var con = require('../Models/model.js');
-
+console.log("Empezando el microservicio de exclusions");
 
 exports.findExclusions = function(req, res){
 
   let advertiser_campaigns = req.query.advertiser_campaigns;
-  //console.log(req.query.advertiser_campaign); 
+  console.log(req.query.advertiser_campaign); 
     
   let publisher_campaign = req.query.publisher_campaign;
-  //console.log(req.query.publisher_campaigns);
+  console.log(req.query.publisher_campaigns);
   
   let exclusionList = advertiser_campaigns.split(",");
   let exclusions = []
   for(i=0; i<exclusionList.length; i++){
+      console.log("Creando la lista de exclusiones, iteracion numero: " + i);
       exclusions.push(parseInt(exclusionList[i]));
   }
 
@@ -46,11 +47,14 @@ exports.findExclusions = function(req, res){
       if (result.length > 0){
           let itemJson = JSON.stringify(result);
           let itemParsed = JSON.parse(itemJson);
+          console.log("El query devolvio por lo menos un resultado.");
+          console.log(itemParsed);
           let filteredList = []
           
           for(i=0; i<itemParsed.length; i++){
               checkExclusions = exclusions.includes(itemParsed[i]["id"]);
               if(!checkExclusions){
+                  console.log(itemParsed[i]["id"] + " no estaba en la lista de exclusiones por lo cual paso el filtro.");
                   filteredList.push(itemParsed[i]["id"]);
               }
           }
