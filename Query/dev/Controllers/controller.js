@@ -208,6 +208,7 @@ exports.findQuery = function (req, res) {
                 }
                 var ranking_A = list_for_ranking_A.toString();
                 var ranking_B = list_for_ranking_B.toString();
+                console.log("Ranking("+ranking_A+", "+ranking_B+", "+maximum+")");
                 Ranking(ranking_A, ranking_B, maximum);
             });
         }).on("error", (err) => {
