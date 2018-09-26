@@ -59,7 +59,7 @@ exports.findQuery = function (req, res) {
     });
 
     function Match(category) {
-        console.log("Entró a matching");
+        console.log("EntrÃ³ a matching");
         var advertiser_campaigns = '';
         var advertiser_campaigns_bids = '';
         http.get('http://internal-PrivateLB-109908406.us-east-1.elb.amazonaws.com/matching/?category=' + category, (resp) => {
@@ -108,9 +108,9 @@ exports.findQuery = function (req, res) {
     }
 
     function Exclusion(advertiser_campaigns, publisher_campaign, advertiser_campaigns_bids) {
-        console.log("Entró a exclusion");
+        console.log("EntrÃ³ a exclusion");
         var exclusive_advertiser_campaigns;
-        http.get('http://internal-PrivateLB-109908406.us-east-1.elb.amazonaws.com/?advertiser_campaigns=' + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign, (resp) => {
+        http.get('http://internal-PrivateLB-109908406.us-east-1.elb.amazonaws.com/exclusions/?advertiser_campaigns=' + advertiser_campaigns + '&publisher_campaign=' + publisher_campaign, (resp) => {
             let data = '';
             // A chunk of data has been received
             resp.on('data', (chunk) => {
@@ -152,7 +152,7 @@ exports.findQuery = function (req, res) {
     }
          
     function Targeting(advertiser_campaigns, zip_code, advertiser_campaigns_bids, exclusion_list) {
-        console.log("Entró a targeting");
+        console.log("EntrÃ³ a targeting");
         let targeted_advertiser_campaigns = '';
         http.get('http://internal-PrivateLB-109908406.us-east-1.elb.amazonaws.com/targeting/?advertiser_campaigns=' + advertiser_campaigns + '&zip_code=' + zip_code, (resp) => {
             let data = '';
@@ -216,7 +216,7 @@ exports.findQuery = function (req, res) {
     }
     
     function Ranking(targeted_advertiser_campaigns, advertiser_campaigns_bids, maximum) {
-        console.log("Entró a ranking");
+        console.log("EntrÃ³ a ranking");
         let ranked_advertiser_campaigns = '';
         let ranked_advertiser_campaigns_bids = '';
         http.get('http://internal-PrivateLB-109908406.us-east-1.elb.amazonaws.com/ranking/?advertiser_campaigns=' + targeted_advertiser_campaigns + '&advertiser_campaigns_bids=' + advertiser_campaigns_bids + maximum_text, (resp) => {
@@ -268,7 +268,7 @@ exports.findQuery = function (req, res) {
     }
 
     function Ads(ranked_advertiser_campaigns) {
-        console.log("Entró a ads");
+        console.log("EntrÃ³ a ads");
         http.get('http://internal-PrivateLB-109908406.us-east-1.elb.amazonaws.com/ads/?advertiser_campaigns=' + ranked_advertiser_campaigns, (resp) => {
             let data = '';
             // A chunk of data has been received
@@ -305,7 +305,7 @@ exports.findQuery = function (req, res) {
     }
 
     function Pricing(ranked_advertiser_campaigns, advertiser_campaign_bids, publisher_campaigns) {
-        console.log("Entró a pricing");
+        console.log("EntrÃ³ a pricing");
         http.get('http://internal-PrivateLB-109908406.us-east-1.elb.amazonaws.com/pricing/?advertiser_campaigns=' + ranked_advertiser_campaigns, (resp) => {
             let data = '';
             // A chunk of data has been received
