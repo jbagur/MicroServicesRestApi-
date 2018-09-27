@@ -81,6 +81,14 @@ exports.findQuery = function (req, res) {
                     })
                     return;
                 }
+                if (typeof myjson.results == "undefined") {
+                    console.log("Matching error");
+                    res.status(400).json({
+                        status: 400,
+                        message: "Matching error"
+                    })
+                    return;
+                }
                 //console.log("JSON: " + (myjson.results)[0].id);     
                 var l = parseInt(Object.keys(myjson.results).length);
                 //console.log("JSON lenght: " + l);
