@@ -51,13 +51,21 @@ exports.findExclusions = function(req, res){
           console.log(itemParsed);
           let filteredList = []
           
-          for(i=0; i<itemParsed.length; i++){
-              checkExclusions = exclusions.includes(itemParsed[i]["id"]);
-              if(checkExclusions){
+          for(i=0; i<exclusions.length; i++){
+              checkExclusions = itemParsed["id"].includes(exclusions[i]);
+              if(!checkExclusions){
                   console.log(itemParsed[i]["id"] + " no estaba en la lista de exclusiones por lo cual paso el filtro.");
-                  filteredList.push(itemParsed[i]["id"]);
+                  filteredList.push(exclusions[i]);
               }
           }
+        
+          //for(i=0; i<itemParsed.length; i++){
+            //  checkExclusions = exclusions.includes(itemParsed[i]["id"]);
+              //if(checkExclusions){
+                //  console.log(itemParsed[i]["id"] + " no estaba en la lista de exclusiones por lo cual paso el filtro.");
+                  //filteredList.push(itemParsed[i]["id"]);
+              //}
+          //}
            
           console.log(JSON.stringify(filteredList, null));
           res.status(200).json({
