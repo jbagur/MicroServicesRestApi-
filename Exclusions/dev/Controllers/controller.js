@@ -53,7 +53,7 @@ exports.findExclusions = function(req, res){
           
           for(i=0; i<itemParsed.length; i++){
               checkExclusions = exclusions.includes(itemParsed[i]["id"]);
-              if(!checkExclusions){
+              if(checkExclusions){
                   console.log(itemParsed[i]["id"] + " no estaba en la lista de exclusiones por lo cual paso el filtro.");
                   filteredList.push(itemParsed[i]["id"]);
               }
